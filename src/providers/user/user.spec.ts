@@ -68,4 +68,25 @@ describe('MockBackend UserProvider', () => {
     expect(caughtError).toBeDefined();
   }));
 
-})
+
+  // ensure register calls the correct endpoint.
+  it('register() shoud query current service url', () => {
+    this.userProvider.register("test_username", "test_password");
+
+    expect(this.lastConnection).toBeDefined('no http service connection at all?');
+    expect(this.lastConnection.request.url).toMatch(/api\/users\/create$/, 'url invalid');
+  });
+
+
+  // ensure register constructs User.
+  it('register() should return a user', fakeAsync(() => {
+    let result: User;
+
+    this.userProvider.register("test", "password").then((user: User) => result = user);
+
+    tick();
+
+    expect(result.username).toEqual("test", ' username should be test');
+    expect(result.password).toEqual("password", ' password should be password');
+  }));
+});
