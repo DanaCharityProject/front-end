@@ -15,10 +15,10 @@ export class GeolocationProvider {
     console.log('Hello GeolocationProvider Provider');
   }
 
-  getUserLocation(): Array<number> {
-    let userCoordinate: Array<number> = [];
+  getUserLocation(): Promise<Geoposition> {
+    let userCoordinate: Promise<Geoposition>;
     this.geolocation.getCurrentPosition().then((resp) => {
-      userCoordinate = [resp.coords.latitude, resp.coords.longitude];
+      userCoordinate = resp;
     }).catch((error) => {
       console.log('Error getting location', error);
       });
