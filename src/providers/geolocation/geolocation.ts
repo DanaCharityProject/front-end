@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,8 +11,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class GeolocationProvider {
 
-  constructor() {
+  constructor(private geolocation: Geolocation) {
     console.log('Hello GeolocationProvider Provider');
+  }
+
+  getUserLocation(): Array<number> {
+    let userCoordinate: Array<number> = [];
+    this.geolocation.getCurrentPosition().then((resp) => {
+      userCoordinate = [resp.coords.latitude, resp.coords.longitude];
+    }).catch((error) => {
+      console.log('Error getting location', error);
+      });
+    return userCoordinate;
   }
 
 }
