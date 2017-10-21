@@ -20,7 +20,7 @@ export class CommunityResourceProvider {
   get_nearby_communityresource(lon: number, lat: number, rad: number): Promise<[CommunityResource]> {
     return this.http.get("api/communityresource/radius")
     .toPromise()
-    .then(response => [new CommunityResource(response.json().id, response.json().name)])
+    .then(response => response.json().data)
     .catch(e => this.handleError(e));
   }
 

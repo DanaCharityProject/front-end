@@ -29,23 +29,39 @@ describe('MockBackend CommunityResource', () => {
     expect(this.lastConnection.request.url).toMatch(/api\/communityresource\/radius$/, 'url invalid');
   });
 
-  // ensure get_nearby_communityresource returns list of community resources in given radius
+  // test returning an empty list of resources
+  it('get_nearby_communityresource() should return an empty list with no resources', fakeAsync(() => {
+    var result: CommunityResource[];
+
+    this.communityResourceProvider.get_nearby_communityresource(43.6427, -79.3741, 10).then((communityresources: CommunityResource[]) => result = communityresources);
+
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: JSON.stringify({data: []}),
+    })));
+
+    tick();
+
+    expect(result).toBeDefined('should be non-null');
+    expect(result.length).toEqual(0, ' no resources should be returned');
+  }));
+
+  // test returning a list of resources
   it('get_nearby_communityresource() should return a list of resources within radius', fakeAsync(() => {
     let result: CommunityResource[];
 
     this.communityResourceProvider.get_nearby_communityresource(43.6427, -79.3741, 10).then((communityresources: CommunityResource[]) => result = communityresources);
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: JSON.stringify([{
-        id: 1,
-        name: "An Example Charity"
-      }]),
+      body: JSON.stringify({data: [new CommunityResource(1, "An Example Charity"), new CommunityResource(2, "Another Example Charity")]}),
     })));
 
     tick();
 
-    expect(result[0].id).toEqual(1, ' id should be 1');
-    expect(result[0].name).toEqual("An Example Charity", ' name should be An Example Charity');
+    expect(result.length).toEqual(2, ' should return 2 resources');
+    expect(result[0].id).toEqual(1, ' id of res1 should be 1');
+    expect(result[0].name).toEqual("An Example Charity", ' name of res1 should be An Example Charity');
+    expect(result[1].id).toEqual(2, ' id of res2 should be 2');
+    expect(result[1].name).toEqual("Another Example Charity", ' name of res2 should be Another Example Charity');
   }));
 
 })
