@@ -41,7 +41,6 @@ describe('MockBackend CommunityResource', () => {
 
     tick();
 
-    expect(result).toBeDefined('should be non-null');
     expect(result.length).toEqual(0, ' no resources should be returned');
   }));
 
