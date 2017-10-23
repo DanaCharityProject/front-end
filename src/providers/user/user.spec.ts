@@ -87,6 +87,5 @@ describe('MockBackend UserProvider', () => {
     tick();
 
     expect(result.username).toEqual("test", ' username should be test');
-    expect(result.password).toEqual("password", ' password should be password');
   }));
 });
