@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/map';
 
 /*
@@ -16,13 +16,7 @@ export class GeolocationProvider {
   }
 
   getUserLocation(): Promise<Geoposition> {
-    let userCoordinate: Promise<Geoposition>;
-    this.geolocation.getCurrentPosition().then((resp) => {
-      userCoordinate = resp;
-    }).catch((error) => {
-      console.log('Error getting location', error);
-      });
-    return userCoordinate;
+    return this.geolocation.getCurrentPosition()
   }
 
 }
