@@ -17,7 +17,7 @@ export class CommunityResourceProvider {
 
   constructor(public http: Http) {}
 
-  get_nearby_communityresource(lon: number, lat: number, rad: number): Promise<[CommunityResource]> {
+  get_nearby_communityresource(lon: number, lat: number, rad: number): Promise<CommunityResource[]> {
     return this.http.get("api/communityresource/radius")
     .toPromise()
     .then(response => response.json().data)
