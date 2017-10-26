@@ -24,3 +24,10 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+
+To Use GeoLocation feature run:
+
+```bash
+$ ionic cordova plugin add cordova-plugin-geolocation --variable GEOLOCATION_USAGE_DESCRIPTION="To locate you"
+$ npm install --save @ionic-native/geolocation
+

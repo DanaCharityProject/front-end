@@ -96,7 +96,6 @@ describe('MockBackend UserProvider', () => {
     })));
     
     tick();
-
     expect(result).toEqual(true);
   }));
 });
