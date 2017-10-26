@@ -94,7 +94,26 @@ describe('MockBackend UserProvider', () => {
           username: "name"
         }),
     })));
-    
+
+    tick();
+
+    expect(result).toEqual(true);
+  }));
+
+
+  // ensure register fails with incorrect input.
+  it('register() should return an error', fakeAsync(() => {
+    let result: Boolean;
+
+    this.userProvider.register("name", "password", "email").then((response: Boolean) => result = response);
+
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: JSON.stringify({
+          id: 1,
+          username: "name"
+        }),
+    })));
+
     tick();
 
     expect(result).toEqual(true);
