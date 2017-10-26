@@ -28,7 +28,7 @@ export class UserProvider {
   register(username: string, password: string, email: string): Promise<Boolean> {
     return this.http.post("api/user", JSON.stringify({username: username, password: password, email: email}))
         .toPromise()
-        .then(response => true) 
+        .then(response => response.json().username == username) 
         .catch(e => this.handleError(e));
   }
 

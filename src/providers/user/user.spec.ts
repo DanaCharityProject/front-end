@@ -52,7 +52,7 @@ describe('MockBackend UserProvider', () => {
     expect(result.token).toEqual("token", ' token should be token');
   }));
 
-  // ensure login fails on 4XX status code. 
+  // ensure login fails on 4XX status code.
   it('login() fails with 4XX status', fakeAsync(() => {
     let result: User;
     let caughtError: any;
@@ -96,26 +96,26 @@ describe('MockBackend UserProvider', () => {
     })));
 
     tick();
-
     expect(result).toEqual(true);
   }));
 
-
-  // ensure register fails with incorrect input.
-  it('register() should return an error', fakeAsync(() => {
+  it('register() should return 409 error', fakeAsync(() => {
     let result: Boolean;
+    let caughtError: any;
 
-    this.userProvider.register("name", "password", "email").then((response: Boolean) => result = response);
+    this.userProvider.register("name", "password", "email")
+        .then((response: Boolean) => result = response)
+        .catch((error: any) => caughtError = error);
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: JSON.stringify({
-          id: 1,
-          username: "name"
-        }),
+      status: 409,
+      statusText: 'Conflict'
     })));
 
     tick();
 
-    expect(result).toEqual(true);
+    expect(result).toBeUndefined();
+    expect(caughtError).toBeDefined();
   }));
 });
+
