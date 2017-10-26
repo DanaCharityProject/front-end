@@ -98,4 +98,18 @@ describe('MockBackend UserProvider', () => {
     tick();
     expect(result).toEqual(true);
   }));
+
+   it('register() should return 409 error', fakeAsync(() => {
+    let result: Boolean;
+
+    this.userProvider.register("name", "password", "email").then((response: Boolean) => result = response);
+
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      status: 409,
+      statusText: 'Unauthorized',
+    })));
+    
+    tick();
+    expect(result).toBeUndefined();
+  }));
 });
