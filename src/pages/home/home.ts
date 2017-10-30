@@ -32,13 +32,17 @@ export class HomePage {
     this.mapElement = document.getElementById('map');
 
     let mapOptions: GoogleMapOptions = {
+      controls: {
+        compass: false
+      },
       camera: {
         target: {
-          lat: 43.0741904,
-          lng: -89.3809802
+          lat: 43.6532, 
+          lng: -79.3832
         },
-        zoom: 18,
-        tilt: 30
+        zoom: 15,
+        tilt: 0,
+        bearing: -17 
       }
     };
 
@@ -51,12 +55,12 @@ export class HomePage {
 
         // Now you can use all methods safely.
         this.map.addMarker({
-            title: 'Ionic',
-            icon: 'blue',
+            title: 'Toronto',
+            icon: 'red',
             animation: 'DROP',
             position: {
-              lat: 43.0741904,
-              lng: -89.3809802
+              lat: 43.6532, 
+              lng: -79.3832
             }
           })
           .then(marker => {
