@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { AccountSettingsPage } from '../account-settings/account-settings';
 
 import {
   GoogleMaps,
@@ -20,6 +21,7 @@ import { Platform } from 'ionic-angular';
 export class HomePage {
   map: GoogleMap;
   mapElement: HTMLElement;
+  accountSettings =  AccountSettingsPage;
 
   constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public platform: Platform) {
     platform.ready()

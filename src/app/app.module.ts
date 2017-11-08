@@ -8,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { AccountSettingsPage } from '../pages/account-settings/account-settings';
 import { UserProvider } from '../providers/user/user';
 import { CommunityResourceProvider } from '../providers/community-resource/community-resource';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
@@ -15,7 +16,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    AccountSettingsPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    AccountSettingsPage
   ],
   providers: [
     StatusBar,
