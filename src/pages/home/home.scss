@@ -40,11 +40,7 @@ page-home {
     .header-title{
     	color: #ff0000;
     }
-    .header-subtitle{
-    	color: #008080;
-    }
-
-    .outline-button {
+    .header-subtitle{    .outline-button {
     	text-transform: none;
     	width: 11em;
     	height: 4em;
@@ -56,6 +52,29 @@ page-home {
     	height: 4em;
     	color: white;
     	background-color: #008080;
+    }
+
+    .solid-button:hover {
+    	background-color: #198c8c !important;
+    }
+    	color: #008080;
+    }
+
+    .outline-button {
+    	text-transform: none;
+    	width: 11em;
+    	height: 4em;
+    	border-radius: 5px;
+    	border: 3px solid red;
+    }
+
+    .solid-button {
+    	text-transform: none;
+    	width: 11em;
+    	height: 4em;
+    	color: white;
+    	background-color: #008080;
+    	border-radius: 5px;
     }
 
     .solid-button:hover {
