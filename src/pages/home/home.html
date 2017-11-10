@@ -1,13 +1,24 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Dāna Project
-    </ion-title>
+<ion-header no-border>
+  <ion-navbar transparent>
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <p>
-    A project that leverages technology and community altruism to help alleviate poverty through micro-donations and social awareness.
-  </p>
+<ion-content fullscreen>
+  <div #map id="map"></div>
+  <div id="map-box" align="center">
+    <button ion-button outline round>
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    Toronto
+    <button ion-button outline round>
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </div>
+
+  <div id="map-button" align="center">
+    <button ion-button [navPush]="accountSettings">Donate</button>
+  </div>
 </ion-content>

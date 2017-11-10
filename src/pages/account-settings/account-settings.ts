@@ -9,34 +9,45 @@ import { AlertController } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-account-settings',
   templateUrl: 'account-settings.html',
 })
+
 export class AccountSettingsPage {
-
-  formIn = {
-    name: '',
-    p1: '',
-    p2: ''
-  }
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-  }
-    
-  saveInfo() {
-    if(this.formIn.p1 == this.formIn.p2){
-      console.log("MATCH");
-      console.log("Name: " + this.formIn.name);
-      console.log("P1: " + this.formIn.p1);
-      console.log("P2: " + this.formIn.p2);
-      const alert = this.alertCtrl.create({
-        title: 'Saved!',
-        subTitle: 'Your changes were recorded successfully.',
-        buttons: ['OK']
-      });
-      alert.present();
+  
+    formIn = {
+      name: '',
+      p1: '',
+      p2: ''
+    }
+  
+    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    }
+      
+    saveInfo() {
+      if(this.formIn.p1 == this.formIn.p2){
+        console.log("MATCH");
+        console.log("Name: " + this.formIn.name);
+        console.log("P1: " + this.formIn.p1);
+        console.log("P2: " + this.formIn.p2);
+        const alert = this.alertCtrl.create({
+          title: 'Saved!',
+          subTitle: 'Your changes were recorded successfully.',
+          buttons: ['OK']
+        });
+        alert.present();
+      } else {
+        console.log("MATCH");
+        console.log("Name: " + this.formIn.name);
+        console.log("P1: " + this.formIn.p1);
+        console.log("P2: " + this.formIn.p2);
+        const alert = this.alertCtrl.create({
+          title: 'Oops!',
+          subTitle: 'Something went wrong.',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
     }
   }
-}

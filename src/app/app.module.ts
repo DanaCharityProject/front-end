@@ -3,9 +3,12 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { AccountSettingsPage } from '../pages/account-settings/account-settings';
 import { UserProvider } from '../providers/user/user';
 import { CommunityResourceProvider } from '../providers/community-resource/community-resource';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
@@ -13,7 +16,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    AccountSettingsPage
   ],
   imports: [
     BrowserModule,
@@ -22,11 +26,14 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    AccountSettingsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    GoogleMaps,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
     CommunityResourceProvider,
