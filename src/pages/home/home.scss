@@ -17,9 +17,21 @@ page-home {
         height: 100%;
     }
 
+    #back-arrow {
+        position: absolute;
+        top: 100;
+        left: 0;
+    }
+
+    #front-arrow {
+        position: absolute;
+        top: 100;
+        right: 0;
+    }
+
     #map-box {
-        background: #fff;
-        margin: 50px 50px;
+        background: rgba(255, 255, 255, 0.50);
+        margin: 90px 90px;
         padding: 20px;
     }
 

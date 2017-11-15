@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { AccountSettingsPage } from '../account-settings/account-settings';
 
 import {
@@ -23,11 +23,24 @@ export class HomePage {
   mapElement: HTMLElement;
   accountSettings =  AccountSettingsPage;
 
-  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public platform: Platform) {
+  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, public platform: Platform, public alertCtrl: AlertController) {
     platform.ready()
       .then(() => {
         this.loadMap();
       })
+  }
+  
+  public places:Array<string> = ['Toronto', 'A', 'B'];
+  public index:number = 1;
+  previous() {
+    this.index = this.index - 1;
+    document.getElementById('map-box').innerHTML = this.places[this.index];
+    
+  }
+
+  next() {
+    this.index = this.index + 1;
+    document.getElementById('map-box').innerHTML = this.places[this.index];
   }
 
   loadMap() {
