@@ -26,7 +26,10 @@
 					<ion-input type="password" [(ngModel)]="formIn.password" name="password" placeholder="Password"></ion-input>
 				</ion-item>
 				<br>
-				<button ion-button type="submit" block class="solid-button">Next</button>
+				<ion-item>
+					<ion-input type="password" [(ngModel)]="formIn.password2" name="repeatPassword" placeholder="Repeat Password"></ion-input>
+				</ion-item>
+				<button ion-button type="submit" class="solid-button">Next</button>
 			</form>
 		</div>
 	</div>

@@ -22,9 +22,9 @@
 		local communities.</p>
 	</div>
 
-	<div class="row">
-		<div class="col-12 buttons">
-			<form (ngSubmit)="saveInfo()">
+	<form (ngSubmit)="saveInfo()">
+		<div class="row">
+			<div class="col-12 buttons">
 				<ion-item>
 					<ion-input type="text" [(ngModel)]="formIn.firstname" name="firstname" placeholder="First Name"></ion-input>
 				</ion-item>
@@ -33,10 +33,10 @@
 					<ion-input type="text" [(ngModel)]="formIn.lastname" name="lastname" placeholder="Last Name"></ion-input>
 				</ion-item>
 				<br>
-				<button ion-button type="submit" block class="outline-button" color="secondary" outline>Next</button>
-			</form>
+				<button ion-button type="submit" class="outline-button" color="secondary" outline>Next</button>
+			</div>
 		</div>
-	</div>
+	</form>
 </ion-content>
 
 

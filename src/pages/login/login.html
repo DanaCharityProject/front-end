@@ -26,12 +26,16 @@
 				<ion-item>
 					<ion-input type="text" [(ngModel)]="credentials.email" name="email" placeholder="Email"></ion-input>
 				</ion-item>
-				<button ion-button color="danger" style="text-transform: none; height:20%" clear><b>forgot email</b></button>	
+				<div align="left">
+					<button ion-button class="forgotButton" style="text-transform: none;" clear><b>forgot email</b></button>	
+				</div>
 				<br>
 				<ion-item>
 					<ion-input type="password" type="password" [(ngModel)]="credentials.password" name="password" placeholder="Password"></ion-input>
 				</ion-item>
-				<a href="">forgot password</a>
+				<div align="left">
+					<button ion-button class="forgotButton" style="text-transform: none;" clear><b>forgot password</b></button>	
+				</div>
 				<br>
 				<button class="solid-button" ion-button>Login</button>
 			</div>

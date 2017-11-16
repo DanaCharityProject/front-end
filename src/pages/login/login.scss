@@ -24,7 +24,7 @@ page-login {
 	}   
 
 	#front-page{
-		background-color: pink;
+		background-color: #ff0a70;
 	}
 
 	.intro {
@@ -52,5 +52,9 @@ page-login {
 
     .solid-button:hover {
     	background-color: #198c8c !important;
+    }
+
+    .forgotButton {
+    	color: white;
     }
 }

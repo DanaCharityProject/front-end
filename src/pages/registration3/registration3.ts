@@ -19,7 +19,8 @@ export class Registration3Page {
     lastname: '',
     email: '',
     postal: '',
-    password: ''
+    password: '',
+    password2: ''
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -37,7 +38,7 @@ export class Registration3Page {
   }
 
    saveInfo(){
-  	this.navCtrl.push(Registration3Page, this.formIn);
+  	console.log("Creatng new user "+this.formIn.firstname);
   }
 
 }
