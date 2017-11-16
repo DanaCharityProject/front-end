@@ -19,11 +19,29 @@ var Registration3Page = /** @class */ (function () {
     function Registration3Page(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.formIn = {
+            firstname: '',
+            lastname: '',
+            email: '',
+            postal: '',
+            password: ''
+        };
     }
+    Registration3Page_1 = Registration3Page;
     Registration3Page.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad Registration3Page');
+        var first = this.navParams.get('firstname');
+        var last = this.navParams.get('lastname');
+        var email = this.navParams.get('email');
+        var postal = this.navParams.get('postal');
+        this.formIn.firstname = first;
+        this.formIn.lastname = last;
+        this.formIn.email = email;
+        this.formIn.postal = postal;
     };
-    Registration3Page = __decorate([
+    Registration3Page.prototype.saveInfo = function () {
+        this.navCtrl.push(Registration3Page_1, this.formIn);
+    };
+    Registration3Page = Registration3Page_1 = __decorate([
         IonicPage(),
         Component({
             selector: 'page-registration3',
@@ -32,6 +50,7 @@ var Registration3Page = /** @class */ (function () {
         __metadata("design:paramtypes", [NavController, NavParams])
     ], Registration3Page);
     return Registration3Page;
+    var Registration3Page_1;
 }());
 export { Registration3Page };
 //# sourceMappingURL=registration3.js.map

@@ -22,7 +22,7 @@
 
 	<div class="row">
 		<div class="col-12 buttons">
-			<button ion-button color="danger" class="outline-button" outline><b>Login</b></button><br>
+			<button ion-button [navPush]="loginPage" color="danger" class="outline-button" outline><b>Login</b></button><br>
 			<button ion-button [navPush]="registrationPage" color="danger" style="text-transform: none; height:20%" clear><b>create account</b></button>
 		</div>
 	</div>

@@ -20,9 +20,9 @@
 		<p class="head-text">A little bit about you.</p>
 	</div>
 
-	<div class="row">
-		<div class="col-12 buttons">
-			<form (ngSubmit)="saveInfo()">
+	<form (ngSubmit)="saveInfo()">
+		<div class="row">
+			<div class="col-12 buttons">
 				<ion-item>
 					<ion-input type="text" [(ngModel)]="formIn.email" name="email" placeholder="Email"></ion-input>
 				</ion-item>
@@ -31,9 +31,12 @@
 					<ion-input type="text" [(ngModel)]="formIn.postal" name="postal" placeholder="Postal Code*"></ion-input>
 				</ion-item>
 				<p style="color: white;">* Optional</p>
-				<br>
-				<button ion-button type="submit" block class="outline-button" color="secondary" outline>Next</button>
-			</form>
+			</div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-12 buttons">
+				<button ion-button type="submit" block class="outline-button" color="secondary" outline>Next</button>
+			</div>
+		</div>
+	</form>
 </ion-content>

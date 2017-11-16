@@ -9,43 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Registration3Page } from '../registration3/registration3';
 /**
- * Generated class for the Registration2Page page.
+ * Generated class for the LoginPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var Registration2Page = /** @class */ (function () {
-    function Registration2Page(navCtrl, navParams) {
+var LoginPage = /** @class */ (function () {
+    function LoginPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.formIn = {
-            firstname: '',
-            lastname: '',
-            email: '',
-            postal: ''
-        };
-        this.registration3Page = Registration3Page;
     }
-    Registration2Page.prototype.ionViewDidLoad = function () {
-        var first = this.navParams.get('firstname');
-        var last = this.navParams.get('lastname');
-        this.formIn.firstname = first;
-        this.formIn.lastname = last;
+    LoginPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad LoginPage');
     };
-    Registration2Page.prototype.saveInfo = function () {
-        this.navCtrl.push(Registration3Page, this.formIn);
-    };
-    Registration2Page = __decorate([
+    LoginPage = __decorate([
         IonicPage(),
         Component({
-            selector: 'page-registration2',
-            templateUrl: 'registration2.html',
+            selector: 'page-login',
+            templateUrl: 'login.html',
         }),
         __metadata("design:paramtypes", [NavController, NavParams])
-    ], Registration2Page);
-    return Registration2Page;
+    ], LoginPage);
+    return LoginPage;
 }());
-export { Registration2Page };
-//# sourceMappingURL=registration2.js.map
+export { LoginPage };
+//# sourceMappingURL=login.js.map
