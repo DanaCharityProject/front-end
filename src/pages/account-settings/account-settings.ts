@@ -38,10 +38,6 @@ export class AccountSettingsPage {
         });
         alert.present();
       } else {
-        console.log("MATCH");
-        console.log("Name: " + this.formIn.name);
-        console.log("P1: " + this.formIn.p1);
-        console.log("P2: " + this.formIn.p2);
         const alert = this.alertCtrl.create({
           title: 'Oops!',
           subTitle: 'Something went wrong.',
