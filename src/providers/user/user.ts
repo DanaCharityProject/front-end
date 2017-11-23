@@ -32,6 +32,13 @@ export class UserProvider {
         .catch(e => this.handleError(e));
   }
 
+  editInfo(username: string, password: string, passwordRE: string): Promise<Boolean> {
+    return this.http.put("api/user/info", JSON.stringify({username: username}))
+        .toPromise()
+        .then(response => true)
+        .catch(e => this.handleError(e));
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

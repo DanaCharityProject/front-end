@@ -98,4 +98,48 @@ describe('MockBackend UserProvider', () => {
     tick();
     expect(result).toEqual(true);
   }));
+
+  // ensure editInfo calls the correct endpoint.
+  it('editInfo() should query current service url', () => {
+    this.userProvider.editInfo("name");
+
+    expect(this.lastConnection).toBeDefined('no http service connection at all?');
+    expect(this.lastConnection.request.url).toMatch(/api\/user\/info$/, 'url invalid');
+  });
+
+  // test successful edit info
+  it('editInfo() should return true', fakeAsync(() => {
+    let result: Boolean;
+
+    this.userProvider.editInfo("name").then((response: Boolean) => result = response);
+
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: JSON.stringify({
+        data: true
+      })})));
+
+    tick();
+
+    expect(result).toEqual(true);
+  }));
+
+  // test failed edit info (invalid info)
+  it('editInfo() should return error', fakeAsync(() => {
+    let result: Boolean;
+    let caughtError: any;
+
+    this.userProvider.editInfo("invalidName")
+        .then((response: Boolean) => result = response)
+        .catch((error: any) => caughtError = error);
+
+    this.lastConnection.mockError(new Response(new ResponseOptions({
+        status: 500,
+        statusText: "User information is invalid.",
+    })));
+
+    tick();
+
+    expect(result).toBeUndefined();
+    expect(caughtError).toBeDefined();
+  }));
 });
