@@ -37,8 +37,13 @@ export class Registration3Page {
   	this.formIn.postal = postal;
   }
 
-   saveInfo(){
-  	console.log("Creatng new user "+this.formIn.firstname);
+  saveInfo(){
+   	let regexp = new RegExp('^(?=.*\d)(?=.*[a-zA-Z])(?!.*[\W_\x7B-\xFF]).{6,15}$');
+    let test = regexp.test(this.formIn.firstname);
+    if(!test){
+    	console.log("Password not valid");
+    }
+
   }
 
 }
