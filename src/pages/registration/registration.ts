@@ -17,7 +17,11 @@ import { Registration2Page } from '../registration2/registration2';
 export class RegistrationPage {
   formIn = {
       firstname: '',
-      lastname: ''
+      lastname: '',
+      email: '',
+      postal: '',
+      password: '',
+      password2: ''
     }
   registration2Page = Registration2Page;
 
@@ -29,9 +33,17 @@ export class RegistrationPage {
   }
 
   saveInfo(){
-  	this.navCtrl.push(Registration2Page, this.formIn);
+    console.log(this.formIn);
+    let regexp = new RegExp('^(?=.*\d)(?=.*[a-zA-Z])(?!.*[\W_\x7B-\xFF]).{6,15}$');
+    let test = regexp.test(this.formIn.firstname);
+    if(!test){
+      console.log("Password not valid");
+    }
   }
 
- 
+ onSlideChangeStart(slider) {
+    
+ }
+
 
 }
