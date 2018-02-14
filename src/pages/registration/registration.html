@@ -16,56 +16,88 @@
 <ion-content no-bounce id="front-page" padding>
   <form (ngSubmit)="saveInfo()">
 	  <ion-slides pager="true" dir="{{dir}}" (ionSlideWillChange)="onSlideChangeStart($event)">
-
 	    <ion-slide>
-	    	<div class="row">
-				<div class="col-12 buttons">
-					<ion-item>
-						<ion-input type="text" [(ngModel)]="formIn.firstname" name="firstname" placeholder="First Name"></ion-input>
-					</ion-item>
-					<br>
-					<ion-item>
-						<ion-input type="text" [(ngModel)]="formIn.lastname" name="lastname" placeholder="Last Name"></ion-input>
-					</ion-item>
-					<br>
-					<button ion-button type="text" class="outline-button" color="secondary" outline>Next</button>
+	    	<ion-row class="intro">
+	    		<ion-col>
+		    		<h1 class="head-text">Hi!</h1>
+					<p class="head-text">Register with us to donate to <br> 
+					local communities.</p>
+				</ion-col> 
+			</ion-row>
+	    	<ion-row>
+	    		<ion-col>
+					<ion-list inset>
+						<ion-item>
+							<ion-input type="text" [(ngModel)]="formIn.firstname" name="firstname" placeholder="First Name"></ion-input>
+						</ion-item>
+						<br>
+						<ion-item>
+							<ion-input type="text" [(ngModel)]="formIn.lastname" name="lastname" placeholder="Last Name"></ion-input>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+			<ion-row class="intro">
+	    		<div class="col-12 buttons">
+					<button ion-button (click)="next();" type="button" class="outline-button" color="secondary" outline>Next</button>
 				</div>
-			</div>
+			</ion-row>
 		</ion-slide>
 	    
 	    <ion-slide>
-			<div class="row">
+	    	<ion-row class="intro">
+	    		<ion-col>
+					<p class="head-text">A little bit about you.</p>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<ion-list inset>
+						<ion-item>
+							<ion-input type="text" [(ngModel)]="formIn.email" name="email" placeholder="Email"></ion-input>
+						</ion-item>
+						<br>
+						<ion-item>
+							<ion-input type="text" [(ngModel)]="formIn.postal" name="postal" placeholder="Postal Code*"></ion-input>
+						</ion-item>
+						
+						<div align="left">
+							<p style="color: white;">* Optional</p>
+						</div>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+	    	<ion-row class="intro">
 				<div class="col-12 buttons">
-					<ion-item>
-						<ion-input type="text" [(ngModel)]="formIn.email" name="email" placeholder="Email"></ion-input>
-					</ion-item>
-					<br>
-					<ion-item>
-						<ion-input type="text" [(ngModel)]="formIn.postal" name="postal" placeholder="Postal Code*"></ion-input>
-					</ion-item>
-					<div align="left">
-						<p style="color: white;">* Optional</p>
-					</div>
+					<button ion-button (click)="next();" type="button" class="outline-button" color="secondary" outline>Next</button>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 buttons">
-					<button ion-button class="outline-button" color="secondary" outline>Next</button>
-				</div>
-			</div>
+			</ion-row>
 	    </ion-slide>
 
 	    <ion-slide>
-			<div class="col-12 buttons">
-				<ion-item>
-					<ion-input type="password" [(ngModel)]="formIn.password" name="password" placeholder="Password"></ion-input>
-				</ion-item>
-				<br>
-				<ion-item>
-					<ion-input type="password" [(ngModel)]="formIn.password2" name="repeatPassword" placeholder="Repeat Password"></ion-input>
-				</ion-item>
-				<button ion-button type="submit" class="solid-button">Next</button>
-			</div>    	
+	 		<ion-row class="intro">
+	    		<ion-col>
+					<p class="head-text">Choose a password. Your email will be used to login to your account.</p>
+				</ion-col>
+			</ion-row>	
+			<ion-row>
+				<ion-col>
+					<ion-list inset>
+						<ion-item>
+							<ion-input type="password" [(ngModel)]="formIn.password" name="password" placeholder="Password"></ion-input>
+						</ion-item>
+						<br>
+						<ion-item>
+							<ion-input type="password" [(ngModel)]="formIn.password2" name="repeatPassword" placeholder="Repeat Password"></ion-input>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+			</ion-row>    	
+	    	<ion-row class="intro">
+				<div class="col-12 buttons">
+					<button ion-button type="submit" class="solid-button">Next</button>
+				</div>
+			</ion-row>
 	    </ion-slide>
 
 	  </ion-slides>
