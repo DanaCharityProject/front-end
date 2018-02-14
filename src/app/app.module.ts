@@ -10,8 +10,6 @@ import { UserProvider } from '../providers/user/user';
 import { CommunityResourceProvider } from '../providers/community-resource/community-resource';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { RegistrationPage } from '../pages/registration/registration';
-import { Registration2Page } from '../pages/registration2/registration2';
-import { Registration3Page } from '../pages/registration3/registration3';
 import { LoginPage } from '../pages/login/login';
 
 @NgModule({
@@ -19,8 +17,6 @@ import { LoginPage } from '../pages/login/login';
     MyApp,
     HomePage,
     RegistrationPage,
-    Registration2Page,
-    Registration3Page,
     LoginPage
 
   ],
@@ -33,8 +29,6 @@ import { LoginPage } from '../pages/login/login';
     MyApp,
     HomePage,
     RegistrationPage,
-    Registration2Page,
-    Registration3Page,
     LoginPage
   ],
   providers: [

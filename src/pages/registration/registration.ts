@@ -3,7 +3,6 @@ import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Registration2Page } from '../registration2/registration2';
 
 /**
  * Generated class for the RegistrationPage page.
@@ -27,7 +26,6 @@ export class RegistrationPage {
       password: '',
       password2: ''
     }
-  registration2Page = Registration2Page;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
   }
