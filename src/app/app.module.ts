@@ -9,11 +9,16 @@ import { HomePage } from '../pages/home/home';
 import { UserProvider } from '../providers/user/user';
 import { CommunityResourceProvider } from '../providers/community-resource/community-resource';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
+import { RegistrationPage } from '../pages/registration/registration';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    RegistrationPage,
+    LoginPage
+
   ],
   imports: [
     BrowserModule,
@@ -22,7 +27,9 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    RegistrationPage,
+    LoginPage
   ],
   providers: [
     StatusBar,

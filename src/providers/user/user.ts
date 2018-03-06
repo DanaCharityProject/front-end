@@ -19,10 +19,17 @@ export class UserProvider {
   constructor(private http: Http) {}
 
   login(username: string, password: string): Promise<User> {
-    return this.http.get("api/users/token")
+    return this.http.get("api/user/token")
       .toPromise()
       .then(response => new User(username, response.json().token))
       .catch(e => this.handleError(e));
+  }
+
+  register(username: string, password: string, email: string): Promise<Boolean> {
+    return this.http.post("api/user", JSON.stringify({username: username, password: password, email: email}))
+        .toPromise()
+        .then(response => response.json().username == username) 
+        .catch(e => this.handleError(e));
   }
 
   private handleError(error: any): Promise<any> {

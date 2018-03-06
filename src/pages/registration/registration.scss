@@ -1,4 +1,4 @@
-page-home {
+page-registration {
     * {
     	box-sizing: border-box;
     }
@@ -24,33 +24,33 @@ page-home {
 	}   
 
 	#front-page{
-		background-color: white;
+		background-color: #ff0a70;
 	}
 
 	.intro {
-		margin-top: 5em;
-		margin-bottom: 6em;
-		text-align: center;
+		margin-top: 1em;
+		margin-bottom: 1em;
+		text-align: left;
+		padding: 1em
 	}
 
     .buttons {
     	text-align: center;
     }
 
-    .header-title{
-    	color: #ff0000;
+    .head-text {
+    	color: white;
     }
 
-    .header-subtitle{    
-		color: #008080;
-    }
 
     .outline-button {
     	text-transform: none;
     	width: 11em;
     	height: 4em;
     	border-radius: 5px;
-    	border: 3px solid red;
+    	border: 3px solid green;
+    	background-color: white;
+    	color: green;
     }
 
     .solid-button {
