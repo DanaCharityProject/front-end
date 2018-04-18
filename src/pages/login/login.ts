@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http, Headers } from '@angular/http';
+import { UserProvider } from  '../../providers/user/user';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 /**
  * Generated class for the LoginPage page.
@@ -19,7 +23,9 @@ export class LoginPage {
     password: ''
   }	
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public userProvider: UserProvider) {
   }
 
   ionViewDidLoad() {
@@ -27,7 +33,11 @@ export class LoginPage {
   }
 
   login(){
-  	
+  	this.userProvider.login(this.credentials.email, this.credentials.password).then((result) => {
+          console.log(result);
+        }, (err) => {
+          console.log(err);
+        });
   }
 
 
