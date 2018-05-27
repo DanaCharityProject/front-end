@@ -19,6 +19,7 @@ import 'rxjs/add/operator/toPromise';
 })
 export class LoginPage {
   credentials = {
+    username: '',
     email: '',
     password: ''
   }	
@@ -33,7 +34,7 @@ export class LoginPage {
   }
 
   login(){
-  	this.userProvider.login(this.credentials.email, this.credentials.password).then((result) => {
+  	this.userProvider.login(this.credentials.username, this.credentials.password).then((result) => {
           console.log(result);
         }, (err) => {
           console.log(err);

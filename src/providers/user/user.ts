@@ -19,6 +19,8 @@ export class UserProvider {
   constructor(private http: Http) {}
 
   login(username: string, password: string): Promise<User> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
     return this.http.get(baseUrl+'/user')
       .toPromise()
       .then(response => new User(username, response.json().token))
