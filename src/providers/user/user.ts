@@ -28,14 +28,14 @@ export class UserProvider {
   }
 
   register(username: string, password: string, email: string): Promise<Boolean> {
+     console.log(email+" "+password);
      return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin' , '*');
         headers.append('Accept', 'application/json');
 
-
-        this.http.post(baseUrl+'/user', JSON.stringify({'username': username, 'password': password, 'email': email}), 
+        this.http.post(baseUrl+'/user', JSON.stringify({'email': email, 'password': password}), 
           {headers: headers})
                 .subscribe(res => {
                     resolve(res.json());

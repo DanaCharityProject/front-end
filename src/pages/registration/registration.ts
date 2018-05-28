@@ -45,7 +45,7 @@ export class RegistrationPage {
     if(this.validatePassword()){
 		    this.userProvider.register(this.formIn.firstname, this.formIn.password, this.formIn.email).then((result) => {
           console.log(result);
-          this.showToast("All good Nigga");
+          this.showToast("All good");
 		    }, (err) => {
 		      this.showToast(err);
 		    });
