@@ -95,6 +95,13 @@ describe('MockBackend UserProvider', () => {
         }),
     })));
 
+    this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      body: JSON.stringify({
+          id: 1,
+          username: "name"
+        }),
+    })));
+    
     tick();
     expect(result).toEqual(true);
   }));

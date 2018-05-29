@@ -18,4 +18,7 @@ export class HomePage {
   	
   }
 
+  ionViewDidEnter() {
+  }
+  
 }
