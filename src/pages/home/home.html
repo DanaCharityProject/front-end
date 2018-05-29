@@ -1,11 +1,30 @@
-<ion-header no-border>
-  <ion-navbar transparent>
-    <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-    </button>
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Dāna Project
+    </ion-title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </ion-navbar>
 </ion-header>
+<ion-content id="front-page" padding>
+	<!-- HOME -->
+	<div class="intro">
+			<h1 class="header-title"><b>Welcome!</b></h1>
+	  		<p class="header-subtitle"><b>Dana Project is a community driven initiative.</b></p>
+	  		<p class="header-subtitle"><b>Give microdonations to local charities.</b></p>
+	</div>
+	
+	<div class="row">
+		<div class="col-12 buttons">
+			<button ion-button class="solid-button"><b>Explore Dana</b></button>
+		</div>
+	</div>
 
-<ion-content fullscreen>
-
+	<div class="row">
+		<div class="col-12 buttons">
+			<button ion-button [navPush]="loginPage" color="danger" class="outline-button" outline><b>Login</b></button><br>
+			<button ion-button [navPush]="registrationPage" color="danger" style="text-transform: none; height:20%" clear><b>create account</b></button>
+		</div>
+	</div>
+	
 </ion-content>

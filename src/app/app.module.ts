@@ -11,12 +11,17 @@ import { AccountSettingsPage } from '../pages/account-settings/account-settings'
 import { UserProvider } from '../providers/user/user';
 import { CommunityResourceProvider } from '../providers/community-resource/community-resource';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
+import { RegistrationPage } from '../pages/registration/registration';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    AccountSettingsPage
+    AccountSettingsPage,
+    RegistrationPage,
+    LoginPage
+
   ],
   imports: [
     BrowserModule,
@@ -26,7 +31,9 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
   entryComponents: [
     MyApp,
     HomePage,
-    AccountSettingsPage
+    AccountSettingsPage,
+    RegistrationPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
