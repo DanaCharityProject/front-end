@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { Base64 } from 'js-base64';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -7,6 +8,7 @@ export class User {
   constructor(public username: string, public token: string) {}
 }
 
+let baseUrl = 'http://localhost:5000';
 /*
   Generated class for the UserProvider provider.
 
@@ -15,21 +17,36 @@ export class User {
 */
 @Injectable()
 export class UserProvider {
-
   constructor(private http: Http) {}
 
   login(username: string, password: string): Promise<User> {
-    return this.http.get("api/user/token")
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Basic '+Base64.encode(username+":"+password));
+    console.log(headers);
+    return this.http.get(baseUrl+'/user/token', {headers:headers})
       .toPromise()
       .then(response => new User(username, response.json().token))
       .catch(e => this.handleError(e));
   }
 
   register(username: string, password: string, email: string): Promise<Boolean> {
-    return this.http.post("api/user", JSON.stringify({username: username, password: password, email: email}))
-        .toPromise()
-        .then(response => response.json().username == username) 
-        .catch(e => this.handleError(e));
+     console.log(email+" "+password);
+     return new Promise((resolve, reject) => {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Access-Control-Allow-Origin' , '*');
+        headers.append('Accept', 'application/json');
+
+        this.http.post(baseUrl+'/user', JSON.stringify({'email': email, 'password': password}), 
+          {headers: headers})
+                .subscribe(res => {
+                    resolve(res.json());
+                }, (err) => {
+                  reject(err);
+                });
+     });
   }
 
   private handleError(error: any): Promise<any> {

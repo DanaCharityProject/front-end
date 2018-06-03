@@ -3,6 +3,7 @@ import { ViewChild } from '@angular/core';
 import { Slides } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UserProvider } from  '../../providers/user/user';
 
 /**
  * Generated class for the RegistrationPage page.
@@ -27,7 +28,10 @@ export class RegistrationPage {
       password2: ''
     }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private toastCtrl: ToastController, 
+    public userProvider: UserProvider) {
   }
 
 
@@ -37,8 +41,15 @@ export class RegistrationPage {
 
 
   saveInfo(){
-    console.log(this.formIn);
-    this.validatePassword()
+    console.log("Saving user info and calling registration function");
+    if(this.validatePassword()){
+		    this.userProvider.register(this.formIn.firstname, this.formIn.password, this.formIn.email).then((result) => {
+          console.log(result);
+          this.showToast("All good");
+		    }, (err) => {
+		      this.showToast(err);
+		    });
+    }
 
   }
 
@@ -75,7 +86,11 @@ export class RegistrationPage {
       else if(!testLowerCase){
         this.showToast("Password needs to have at least one lower case letter")
         console.log("Password needs lower case");
+      }else{
+        return true;
       }
+        return false;
+
     }
   }
 
@@ -100,7 +115,7 @@ export class RegistrationPage {
   }
 
 
- onSlideChangeStart(slider) {    
+ onSlideChangeStart(slider) {
  }
 
 
