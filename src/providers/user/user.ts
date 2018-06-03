@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Base64 } from 'js-base64';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -21,7 +22,10 @@ export class UserProvider {
   login(username: string, password: string): Promise<User> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get(baseUrl+'/user')
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Basic '+Base64.encode(username+":"+password));
+    console.log(headers);
+    return this.http.get(baseUrl+'/user/token', {headers:headers})
       .toPromise()
       .then(response => new User(username, response.json().token))
       .catch(e => this.handleError(e));
