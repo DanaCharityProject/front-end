@@ -18,16 +18,17 @@ page-map {
         z-index: -1;
     }
 
-    #back-arrow {
-        position: absolute;
-        top: 100;
-        left: 0;
+    #back-arrow {        
+        float: left;
     }
 
+
     #front-arrow {
-        position: absolute;
-        top: 100;
-        right: 0;
+        float: right;
+    }
+
+    #container {
+        width: 100%;
     }
 
     #map-box {

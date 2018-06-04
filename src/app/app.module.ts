@@ -14,6 +14,7 @@ import { CommunityResourceProvider } from '../providers/community-resource/commu
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { RegistrationPage } from '../pages/registration/registration';
 import { LoginPage } from '../pages/login/login';
+import { MapPage } from '../pages/map/map';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoginPage } from '../pages/login/login';
     HomePage,
     AccountSettingsPage,
     RegistrationPage,
-    LoginPage
+    LoginPage,
+    MapPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { LoginPage } from '../pages/login/login';
     HomePage,
     AccountSettingsPage,
     RegistrationPage,
-    LoginPage
+    LoginPage,
+    MapPage
   ],
   providers: [
     StatusBar,
