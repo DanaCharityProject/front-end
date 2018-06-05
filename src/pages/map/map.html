@@ -6,7 +6,7 @@
 -->
 <ion-header no-border>
   <ion-navbar transparent>
-    <ion-title>Map</ion-title>
+    <ion-title>{{ region }}</ion-title>
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
@@ -23,6 +23,7 @@
         </button>
       </div>
       <div id="map-box">
+        {{ communities[index] }}
       </div>
       <div id="front-arrow" float-right>
         <button ion-button outline round (click)="next()">

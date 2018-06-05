@@ -17,7 +17,8 @@ import leaflet from 'leaflet';
 export class MapPage {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
-  public places:Array<string> = ['Toronto', 'A', 'B'];
+  public region: string = "Toronto";
+  public communities:Array<string> = ['The Annex', 'Riverside', 'Regent Park'];
   public index:number = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
@@ -27,20 +28,18 @@ export class MapPage {
   }
 
   previous() {
-    this.index = (this.index - 1) % this.places.length;
-    document.getElementById('map-box').innerHTML = this.places[this.index];
-    
+    this.index = (this.index - 1) % this.communities.length;
   }
 
   next() {
-    this.index = (this.index + 1) % this.places.length;
-    document.getElementById('map-box').innerHTML = this.places[this.index];
+    this.index = (this.index + 1) % this.communities.length;
   }
 
   loadMap() {
     this.map = leaflet.map("map", {
       zoomControl: false
-    }).fitWorld();
+    }).setView([43.65357, -79.38394], 14);
+
     leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attributions: 'Leaflet',
       maxZoom: 18
