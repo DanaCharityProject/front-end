@@ -19,22 +19,27 @@ page-map {
     }
 
     #back-arrow {        
-        float: left;
+        /*display: inline-block;
+        position: absolute;
+        align: left;*/
     }
-
 
     #front-arrow {
-        float: right;
-    }
-
-    #container {
-        width: 100%;
+        /*display: inline-block;
+        position: absolute;
+        align: right;*/
     }
 
     #map-box {
-        background: rgba(255, 255, 255, 0.50);
-        margin: 90px 90px;
-        padding: 20px;
+        display: inline-block;
     }
+
+    #container {
+        background: rgba(255, 255, 255, 0.50);
+        margin: 25px 25px;
+        padding: 10px;
+        overflow: auto;
+    }
+
 
 }

@@ -14,23 +14,26 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <div #map id="map"></div>
-  <div id="container">
-    <div id="back-arrow">
-      <button ion-button outline round (click)="previous()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
+  <div id="map"></div>
+  
+    <div id="container">
+      <div id="back-arrow" float-left>
+        <button ion-button outline round (click)="previous()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </div>
+      <div text-center>
+        <a id="map-box"></a>
+      </div>
+      <div id="front-arrow" float-right>
+        <button ion-button outline round (click)="next()">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </div>
     </div>
     
-    <div id="map-box" align="center"></div>
-
-    <div id="front-arrow">
-      <button ion-button outline round (click)="next()">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </div>
-  </div>
-  <div id="map-button" align="center">
+  
+  <div id="map-button">
     <button ion-button>Donate</button>
   </div>
 </ion-content>
