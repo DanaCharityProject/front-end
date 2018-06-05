@@ -18,28 +18,30 @@ page-map {
         z-index: -1;
     }
 
-    #back-arrow {        
-        /*display: inline-block;
-        position: absolute;
-        align: left;*/
-    }
-
-    #front-arrow {
-        /*display: inline-block;
-        position: absolute;
-        align: right;*/
-    }
-
-    #map-box {
-        display: inline-block;
-    }
-
     #container {
         background: rgba(255, 255, 255, 0.50);
         margin: 25px 25px;
         padding: 10px;
         overflow: auto;
+        display: flex;
+        align-items: center;
     }
 
+    #map-box { /* Center Div */
+        margin: 0 auto !important;
+    }
 
+    #map-button { /* Donate Button Container */
+        width: 100%;
+        position: absolute;
+        bottom: 5%; 
+        text-align: center;
+    }
+
+    #map-button button { /* Donate Button */
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
 }
