@@ -44,4 +44,11 @@ page-map {
         left: 0;
         right: 0;
     }
+
+    /* style for leaflet popup  */
+    .custom .leaflet-popup-tip,
+    .custom .leaflet-popup-content-wrapper {
+        background: black;
+        color: #ffffff;
+    }
 }
