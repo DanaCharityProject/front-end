@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Base64 } from 'js-base64';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { EnvironmentVariables } from '../../app/env/env';
 
 export class User {
   constructor(public username: string, public token: string) {}
 }
 
-let baseUrl = 'http://localhost:5000';
 /*
   Generated class for the UserProvider provider.
 
@@ -17,15 +17,15 @@ let baseUrl = 'http://localhost:5000';
 */
 @Injectable()
 export class UserProvider {
-  constructor(private http: Http) {}
+  constructor(public http: Http, @Inject(EnvironmentVariables) public env) {}
 
   login(username: string, password: string): Promise<User> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
-    headers.append('Authorization', 'Basic '+Base64.encode(username+":"+password));
+    headers.append('Authorization', 'Basic '+ Base64.encode(username+":"+password));
     console.log(headers);
-    return this.http.get(baseUrl+'/user/token', {headers:headers})
+    return this.http.get(this.env.apiEndpoint + '/user/token', {headers:headers})
       .toPromise()
       .then(response => new User(username, response.json().token))
       .catch(e => this.handleError(e));
@@ -39,7 +39,7 @@ export class UserProvider {
         headers.append('Access-Control-Allow-Origin' , '*');
         headers.append('Accept', 'application/json');
 
-        this.http.post(baseUrl+'/user', JSON.stringify({'email': email, 'password': password}), 
+        this.http.post(this.env.apiEndpoint + '/user', JSON.stringify({'email': email, 'password': password}), 
           {headers: headers})
                 .subscribe(res => {
                     resolve(res.json());

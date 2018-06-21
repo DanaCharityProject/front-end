@@ -51,15 +51,17 @@ describe('MockBackend CommunityResource', () => {
     this.communityResourceProvider.get_nearby_communityresource(43.6427, -79.3741, 10).then((communityresources: CommunityResource[]) => result = communityresources);
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: JSON.stringify({data: [new CommunityResource(1, "An Example Charity"), new CommunityResource(2, "Another Example Charity")]}),
+      body: JSON.stringify({data: [new CommunityResource(1, "An Example Charity", "123", [43.70273,
+        -79.3977]), new CommunityResource(2, "Another Example Charity", "123",  [43.70273,
+          -79.3977])]}),
     })));
 
     tick();
 
     expect(result.length).toEqual(2, ' should return 2 resources');
-    expect(result[0].id).toEqual(1, ' id of res1 should be 1');
+    expect(result[0].community_resource_id).toEqual(1, ' id of res1 should be 1');
     expect(result[0].name).toEqual("An Example Charity", ' name of res1 should be An Example Charity');
-    expect(result[1].id).toEqual(2, ' id of res2 should be 2');
+    expect(result[1].community_resource_id).toEqual(2, ' id of res2 should be 2');
     expect(result[1].name).toEqual("Another Example Charity", ' name of res2 should be Another Example Charity');
   }));
 
