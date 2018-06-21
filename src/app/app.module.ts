@@ -15,6 +15,7 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { RegistrationPage } from '../pages/registration/registration';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
+import { EnvironmentsModule } from './env/env.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MapPage } from '../pages/map/map';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    EnvironmentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
