@@ -6,7 +6,6 @@
 -->
 <ion-header no-border>
   <ion-navbar transparent>
-    <ion-title>{{ region }}</ion-title>
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
@@ -18,21 +17,24 @@
   
     <div id="container">
       <div id="back-arrow" float-left>
-        <button ion-button outline round (click)="previous()">
+        <button ion-button clear round icon-only color="dark" (click)="previous()">
           <ion-icon name="arrow-back"></ion-icon>
         </button>
       </div>
       <div id="map-box">
         <h3>{{ communities[index] }}</h3>
+        <button ion-button clear outline (click)="editRadius()">
+          <h4 text-center><ion-icon name="pin"></ion-icon> {{ radius }} km</h4>
+        </button>
       </div>
       <div id="front-arrow" float-right>
-        <button ion-button outline round (click)="next()">
+        <button ion-button clear round icon-only color="dark" (click)="next()">
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </div>
     </div>
   
   <div id="map-button">
-    <button ion-button>Donate</button>
+    <button ion-button large color="dark">Donate</button>
   </div>
 </ion-content>

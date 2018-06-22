@@ -1,5 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from "ionic-angular";
+import { NavController, NavParams, ModalController } from 'ionic-angular';
+
+import { CommunityResourceProvider, CommunityResource } from '../../providers/community-resource/community-resource';
+import { EditRadiusPage } from '../../pages/edit-radius/edit-radius';
 
 import leaflet from 'leaflet';
 
@@ -19,20 +22,30 @@ export class MapPage {
   map: any;
   public region: string = "Toronto";
   public communities:Array<string> = ['The Annex', 'Riverside', 'Regent Park'];
-  public index:number = 1;
+  public index:number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  public radius: number = 3;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public communityResourceProvider: CommunityResourceProvider) {}
 
   ionViewDidEnter() {
     this.loadMap();
   }
 
   previous() {
-    this.index = (this.index - 1) % this.communities.length;
+    this.index -= ((this.index - 1) >= 0) ? 1 : 0;
   }
 
   next() {
-    this.index = (this.index + 1) % this.communities.length;
+    this.index += ((this.index + 1) < this.communities.length) ? 1 : 0;
+  }
+
+  editRadius() {
+    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": this.radius }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
+    editRadiusModal.onDidDismiss(data => {
+      this.radius = data.radius;
+    });
+    editRadiusModal.present();
   }
 
   loadMap() {
@@ -54,11 +67,12 @@ export class MapPage {
       popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
     });
 
-    const array = [{name: "Good Charity", coordinates: [43.65357, -79.38394], address: '123 Charity St.', phone: '416-123-4567'}, {name: "Cool Charity", coordinates: [43.65707099999999, -79.40551399999998], address: '123 Charity St.', phone: '416-123-4567'}, {name: "Nice Charity", coordinates: [43.6420785, -79.40172150000001], address: '123 Charity St.', phone: '416-123-4567'}, {name: "Happy Charity", coordinates: [43.6473763, -79.40252959999998], address: '123 Charity St.', phone: '416-123-4567'}];
-    
-    array.forEach(element => {
-      let marker = leaflet.marker(element.coordinates, {icon: charIcon}).addTo(this.map);
-      marker.bindPopup("<b>"+element.name+"</b><br>Address: "+element.address+"<br>Ph: "+element.phone, {'maxWidth':'500', 'className' : 'custom'}).openPopup();
-    });
+    this.communityResourceProvider.get_nearby_communityresource(43.65357, -79.38394, 1)
+      .then((communityResources: CommunityResource[]) =>
+        communityResources.forEach(communityResource => {
+          let marker = leaflet.marker(communityResource.location, {icon: charIcon}).addTo(this.map);
+          marker.bindPopup("<b>"+communityResource.name+"</b><br>"+communityResource.address, {'maxWidth':'500', 'className' : 'custom'}).openPopup();
+        }))
+      .catch(e => console.log(e));
   }
 }
