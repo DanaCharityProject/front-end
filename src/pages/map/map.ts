@@ -51,7 +51,7 @@ export class MapPage {
   loadMap() {
     this.map = leaflet.map("map", {
       zoomControl: false
-    }).setView([43.65357, -79.38394], 14);
+    }).setView([43.65357, -79.38394], 14)
 
     leaflet.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       attributions: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -59,6 +59,14 @@ export class MapPage {
       id: 'mapbox.light',
       accessToken: 'pk.eyJ1IjoiZGFuYXRlc3QiLCJhIjoiY2ppbmcxaXB6MGIwNDNrbzc0cWQzb2d4cSJ9.hqahFzlxsbPWRbnuCFU8xg'
     }).addTo(this.map);
+
+    this.map.locate({setView: true, watch: true, maxZoom: 16})
+    .on('locationfound', function(e){
+      console.log ("location received")
+    })
+    .on('locationerror', function(e){
+      console.log(e);
+    });
 
     let charIcon = leaflet.icon({
       iconUrl: '../assets/images/icon.png',
