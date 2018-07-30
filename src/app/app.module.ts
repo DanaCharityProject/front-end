@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AccountSettingsPage } from '../pages/account-settings/account-settings';
 import { UserProvider } from '../providers/user/user';
+import { CommunityProvider } from '../providers/community/community';
 import { CommunityResourceProvider } from '../providers/community-resource/community-resource';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { RegistrationPage } from '../pages/registration/registration';
@@ -50,6 +51,7 @@ import { EditRadiusPage } from '../pages/edit-radius/edit-radius';
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
+    CommunityProvider,
     CommunityResourceProvider,
     GeolocationProvider
   ]

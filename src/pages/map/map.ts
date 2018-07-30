@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { CommunityResourceProvider, CommunityResource } from '../../providers/community-resource/community-resource';
+import { CommunityProvider, Community } from '../../providers/community/community';
 import { EditRadiusPage } from '../../pages/edit-radius/edit-radius';
 
 import leaflet from 'leaflet';
@@ -26,7 +27,7 @@ export class MapPage {
 
   public radius: number = 3;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public communityResourceProvider: CommunityResourceProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public communityResourceProvider: CommunityResourceProvider, public communityProvider: CommunityProvider) {}
 
   ionViewDidEnter() {
     this.loadMap();
@@ -82,5 +83,12 @@ export class MapPage {
           marker.bindPopup("<b>"+communityResource.name+"</b><br>"+communityResource.address, {'maxWidth':'500', 'className' : 'custom'}).openPopup();
         }))
       .catch(e => console.log(e));
-  }
+
+    this.communityProvider.get_all_communities()
+      .then((communities: Community[]) =>
+        communities.forEach(community => {
+          let multipolygon = leaflet.polygon(community.boundaries, {color: 'pink'}).addTo(this.map);
+        }))
+      .catch(e => console.log(e));
+  }  
 }
