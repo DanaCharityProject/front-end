@@ -22,7 +22,7 @@ export class MapPage {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
   public region: string = "Toronto";
-  public communities:Array<string> = ['The Annex', 'Riverside', 'Regent Park'];
+  public communities:Array<string> = [];
   public index:number = 0;
 
   public radius: number = 3;
@@ -87,7 +87,9 @@ export class MapPage {
     this.communityProvider.get_all_communities()
       .then((communities: Community[]) =>
         communities.forEach(community => {
-          let multipolygon = leaflet.polygon(community.boundaries, {color: 'pink'}).addTo(this.map);
+          this.communities.push(community.name);
+          let multipolygon = leaflet.polygon(community.boundaries['coordinates'], {color: 'pink'}).addTo(this.map);
+          multipolygon.bindPopup("<b>"+community.name+"</b>", {'maxWidth':'500', 'className' : 'custom'}).openPopup();
         }))
       .catch(e => console.log(e));
   }  
