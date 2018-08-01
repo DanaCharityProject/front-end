@@ -32,6 +32,7 @@ export class MapPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public modalCtrl: ModalController, 
+              public communityProvider: CommunityProvider,
               public communityResourceProvider: CommunityResourceProvider,
               private geolocation: Geolocation) {}
 
