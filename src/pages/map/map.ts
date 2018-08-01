@@ -89,7 +89,7 @@ export class MapPage {
       accessToken: 'pk.eyJ1IjoiZGFuYXRlc3QiLCJhIjoiY2ppbmcxaXB6MGIwNDNrbzc0cWQzb2d4cSJ9.hqahFzlxsbPWRbnuCFU8xg'
     }).addTo(this.map);
 
-    leaflet.control.locate().addTo(this.map);
+    //leaflet.control.locate().addTo(this.map);
     
     let charIcon = leaflet.icon({
       iconUrl: '../assets/images/icon.png',
