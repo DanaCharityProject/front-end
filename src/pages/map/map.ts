@@ -4,6 +4,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { CommunityResourceProvider, CommunityResource } from '../../providers/community-resource/community-resource';
 import { CommunityProvider, Community } from '../../providers/community/community';
 import { EditRadiusPage } from '../../pages/edit-radius/edit-radius';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
 import leaflet from 'leaflet';
 
@@ -26,11 +27,39 @@ export class MapPage {
   public index:number = 0;
 
   public radius: number = 3;
+  lat: any;
+  lng: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public communityResourceProvider: CommunityResourceProvider, public communityProvider: CommunityProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+              public modalCtrl: ModalController, 
+              public communityResourceProvider: CommunityResourceProvider,
+              private geolocation: Geolocation) {}
 
   ionViewDidEnter() {
     this.loadMap();
+  }
+
+  ionViewDidLoad(){
+    this.geolocation.getCurrentPosition().then((pos) => {
+         this.lat = pos.coords.latitude;
+         this.lng = pos.coords.longitude;
+         let marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);   
+         this.centerLeafletMapOnMarker(this.map, marker);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+    let geoMarker = leaflet.icon({
+      iconUrl: '../assets/images/currPos.png',
+      iconSize:     [50, 50], 
+      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
+      popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
+    });
+  }
+
+  private centerLeafletMapOnMarker(map, marker) {
+    var latLngs = [ marker.getLatLng() ];
+    var markerBounds = leaflet.latLngBounds(latLngs);
+    map.fitBounds(markerBounds);
   }
 
   previous() {
@@ -61,14 +90,7 @@ export class MapPage {
       accessToken: 'pk.eyJ1IjoiZGFuYXRlc3QiLCJhIjoiY2ppbmcxaXB6MGIwNDNrbzc0cWQzb2d4cSJ9.hqahFzlxsbPWRbnuCFU8xg'
     }).addTo(this.map);
 
-    this.map.locate({setView: true, watch: true, maxZoom: 16})
-    .on('locationfound', function(e){
-      console.log ("location received")
-    })
-    .on('locationerror', function(e){
-      console.log(e);
-    });
-
+    
     let charIcon = leaflet.icon({
       iconUrl: '../assets/images/icon.png',
       iconSize:     [50, 50], 
