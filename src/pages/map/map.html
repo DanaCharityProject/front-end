@@ -21,7 +21,7 @@
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
   <div id="map"></div>
     <ion-fab bottom right>
-      <button ion-fab color="primary"><ion-icon name="ios-locate-outline"></ion-icon></button>
+      <button ion-fab (click)="recenterMap()" color="primary"><ion-icon name="ios-locate-outline"></ion-icon></button>
     </ion-fab>
     <div id="container">
       <div id="back-arrow" float-left>
