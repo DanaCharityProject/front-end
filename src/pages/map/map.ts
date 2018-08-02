@@ -29,6 +29,7 @@ export class MapPage {
   public radius: number = 3;
   lat: any;
   lng: any;
+  marker: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public modalCtrl: ModalController, 
@@ -39,21 +40,32 @@ export class MapPage {
     this.loadMap();
   }
 
+
   ionViewDidLoad(){
-    this.geolocation.getCurrentPosition().then((pos) => {
-         this.lat = pos.coords.latitude;
-         this.lng = pos.coords.longitude;
-         let marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);   
-         this.centerLeafletMapOnMarker(this.map, marker);
-        }).catch((error) => {
-          console.log('Error getting location', error);
-        });
     let geoMarker = leaflet.icon({
       iconUrl: '../assets/images/currPos.png',
       iconSize:     [50, 50], 
       //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
       popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
     });
+    this.geolocation.getCurrentPosition().then((pos) => {
+         this.lat = pos.coords.latitude;
+         this.lng = pos.coords.longitude;
+         this.marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);   
+         this.centerLeafletMapOnMarker(this.map, this.marker);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+  }
+
+
+  recenterMap() {
+    this.geolocation.getCurrentPosition().then((pos) => {
+      this.marker.setLatLng({lon: this.lng, lat: this.lat });
+      this.centerLeafletMapOnMarker(this.map, this.marker);
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
   private centerLeafletMapOnMarker(map, marker) {
