@@ -4,6 +4,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { CommunityResourceProvider, CommunityResource } from '../../providers/community-resource/community-resource';
 import { CommunityProvider, Community } from '../../providers/community/community';
 import { EditRadiusPage } from '../../pages/edit-radius/edit-radius';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
 import leaflet from 'leaflet';
 
@@ -28,8 +29,15 @@ export class MapPage {
   public current_community: string = "";
 
   public radius: number = 3;
+  lat: any;
+  lng: any;
+  marker: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public communityResourceProvider: CommunityResourceProvider, public communityProvider: CommunityProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+              public modalCtrl: ModalController, 
+              public communityProvider: CommunityProvider,
+              public communityResourceProvider: CommunityResourceProvider,
+              private geolocation: Geolocation) {}
 
   ionViewDidEnter() {
     this.loadMap();
@@ -98,14 +106,8 @@ export class MapPage {
       accessToken: 'pk.eyJ1IjoiZGFuYXRlc3QiLCJhIjoiY2ppbmcxaXB6MGIwNDNrbzc0cWQzb2d4cSJ9.hqahFzlxsbPWRbnuCFU8xg'
     }).addTo(this.map);
 
-    this.map.locate({setView: true, watch: true, maxZoom: 16})
-    .on('locationfound', function(e){
-      console.log ("location received")
-    })
-    .on('locationerror', function(e){
-      console.log(e);
-    });
-
+    //leaflet.control.locate().addTo(this.map);
+    
     let charIcon = leaflet.icon({
       iconUrl: '../assets/images/icon.png',
       iconSize:     [50, 50], 
