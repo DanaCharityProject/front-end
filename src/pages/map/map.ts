@@ -25,12 +25,49 @@ export class MapPage {
   public communities:Array<string> = [];
   public index:number = 0;
 
+  public current_community: string = "";
+
   public radius: number = 3;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public communityResourceProvider: CommunityResourceProvider, public communityProvider: CommunityProvider) {}
 
   ionViewDidEnter() {
     this.loadMap();
+  }
+
+
+  ionViewDidLoad(){
+    let geoMarker = leaflet.icon({
+      iconUrl: '../assets/images/currPos.png',
+      iconSize:     [50, 50], 
+      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
+      popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
+    });
+    this.geolocation.getCurrentPosition().then((pos) => {
+         this.lat = pos.coords.latitude;
+         this.lng = pos.coords.longitude;
+         this.marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);   
+         this.centerLeafletMapOnMarker(this.map, this.marker);
+         this.getSurroundingCommunity();
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+  }
+
+
+  recenterMap() {
+    this.geolocation.getCurrentPosition().then((pos) => {
+      this.marker.setLatLng({lon: this.lng, lat: this.lat });
+      this.centerLeafletMapOnMarker(this.map, this.marker);
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }
+
+  private centerLeafletMapOnMarker(map, marker) {
+    var latLngs = [ marker.getLatLng() ];
+    var markerBounds = leaflet.latLngBounds(latLngs);
+    map.fitBounds(markerBounds);
   }
 
   previous() {
@@ -92,5 +129,15 @@ export class MapPage {
           multipolygon.bindPopup("<b>"+community.name+"</b>", {'maxWidth':'500', 'className' : 'custom'}).openPopup();
         }))
       .catch(e => console.log(e));
-  }  
+  }
+  
+  getSurroundingCommunity() {
+    this.communityProvider.get_community_surrounding(this.lat + "," + this.lng)
+      .then((community: Community) =>{
+        if(community == null) {
+          this.current_community = "None";
+        } else {
+          this.current_community = community.name;
+        }});
+  }
 }
