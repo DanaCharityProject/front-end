@@ -4,6 +4,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { CommunityResourceProvider, CommunityResource } from '../../providers/community-resource/community-resource';
 import { CommunityProvider, Community } from '../../providers/community/community';
 import { EditRadiusPage } from '../../pages/edit-radius/edit-radius';
+import { DonatePage } from '../../pages/donate/donate';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
 import leaflet from 'leaflet';
@@ -137,4 +138,17 @@ export class MapPage {
         }))
       .catch(e => console.log(e));
   }  
+
+  donate(){
+    let donateModal = this.modalCtrl.create(DonatePage, {  }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
+    donateModal.onDidDismiss(data => {
+      // this.metricUnit = data.metricUnit;
+      // if(this.metricUnit == "km"){
+      //   this.radius = 1;
+      // }else{
+      //   this.radius = data.radius*100;
+      // }
+    });
+    donateModal.present();
+  }
 }
