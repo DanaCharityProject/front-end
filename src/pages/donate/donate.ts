@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-$IMPORTSTATEMENT
+import { NavParams, ViewController } from "ionic-angular";
 
 /**
  * Generated class for the DonatePage page.
@@ -7,14 +7,14 @@ $IMPORTSTATEMENT
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-$IONICPAGE
+
 @Component({
   selector: 'page-donate',
   templateUrl: 'donate.html',
 })
 export class DonatePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
