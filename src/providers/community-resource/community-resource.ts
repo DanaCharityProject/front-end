@@ -39,6 +39,20 @@ export class CommunityResourceProvider {
     .catch(e => this.handleError(e));
   }
 
+  get_communityresources_in_shape(polygonString: string): Promise<CommunityResource[]> {
+    return this.http.get(this.env.apiEndpoint + "/communityresource/" + polygonString, {
+    })
+    .toPromise()
+    .then(response =>
+      response.json().map(communityResource =>
+        new CommunityResource(
+          communityResource.community_resource_id,
+          communityResource.name,
+          communityResource.address,
+          communityResource.location.coordinates)))
+    .catch(e => this.handleError(e));
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

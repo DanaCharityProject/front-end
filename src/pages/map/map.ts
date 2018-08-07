@@ -28,6 +28,15 @@ export class MapPage {
 
   public current_community: string = "";
 
+  private charIcon = leaflet.icon({
+    iconUrl: '../assets/images/icon.png',
+    iconSize:     [50, 50], 
+    /*iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
+    popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
+  });
+
+  private communityResourceMarkers:Array<any> = [];
+
   public radius: number = 3;
   lat: any;
   lng: any;
@@ -40,7 +49,7 @@ export class MapPage {
               private geolocation: Geolocation) {}
 
   ionViewDidEnter() {
-    this.loadMap();
+    // this.loadMap();
   }
 
 
@@ -54,6 +63,7 @@ export class MapPage {
     this.geolocation.getCurrentPosition().then((pos) => {
          this.lat = pos.coords.latitude;
          this.lng = pos.coords.longitude;
+         this.loadMap();
          this.marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);   
          this.centerLeafletMapOnMarker(this.map, this.marker);
          this.getSurroundingCommunity();
@@ -73,9 +83,8 @@ export class MapPage {
   }
 
   private centerLeafletMapOnMarker(map, marker) {
-    var latLngs = [ marker.getLatLng() ];
-    var markerBounds = leaflet.latLngBounds(latLngs);
-    map.fitBounds(markerBounds);
+    map.setView(marker.getLatLng());
+    this.getCommunitiesOnScreen();
   }
 
   previous() {
@@ -97,7 +106,8 @@ export class MapPage {
   loadMap() {
     this.map = leaflet.map("map", {
       zoomControl: false
-    }).setView([43.65357, -79.38394], 14)
+    }).setView([this.lat, this.lng], 14)
+    .setZoom(14);
 
     leaflet.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       attributions: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -115,24 +125,42 @@ export class MapPage {
       popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
     });
 
-    this.communityResourceProvider.get_nearby_communityresource(43.65357, -79.38394, 1)
-      .then((communityResources: CommunityResource[]) =>
-        communityResources.forEach(communityResource => {
-          let marker = leaflet.marker(communityResource.location, {icon: charIcon}).addTo(this.map);
-          marker.bindPopup("<b>"+communityResource.name+"</b><br>"+communityResource.address, {'maxWidth':'500', 'className' : 'custom'}).openPopup();
-        }))
-      .catch(e => console.log(e));
+    this.getCommunitiesOnScreen();
 
     this.communityProvider.get_all_communities()
       .then((communities: Community[]) =>
         communities.forEach(community => {
           this.communities.push(community.name);
           let multipolygon = leaflet.polygon(community.boundaries['coordinates'], {color: 'pink'}).addTo(this.map);
-          multipolygon.bindPopup("<b>"+community.name+"</b>", {'maxWidth':'500', 'className' : 'custom'}).openPopup();
+          multipolygon.bindPopup("<b>"+community.name+"</b>", {'maxWidth':'500', 'className' : 'custom'});
         }))
       .catch(e => console.log(e));
   }
-  
+
+  getCommunitiesOnScreen() {
+    this.communityResourceMarkers.forEach(marker => {
+      this.map.removeLayer(marker);
+    });
+    let bounds = this.map.getBounds();
+
+    let boundArrayString = "POLYGON((" + 
+      bounds.getNorthWest().lat + " " + bounds.getNorthWest().lng + "," +
+      bounds.getNorthEast().lat + " " + bounds.getNorthEast().lng + "," +
+      bounds.getSouthEast().lat + " " + bounds.getSouthEast().lng + "," +
+      bounds.getSouthWest().lat + " " + bounds.getSouthWest().lng + "," +
+      bounds.getNorthWest().lat + " " + bounds.getNorthWest().lng + "))";
+
+    this.communityResourceProvider.get_communityresources_in_shape(
+      boundArrayString
+    ).then((communityResources: CommunityResource[]) =>
+        communityResources.forEach(communityResource => {
+          let marker = leaflet.marker(communityResource.location, {icon: this.charIcon}).addTo(this.map);
+          marker.bindPopup("<b>"+communityResource.name+"</b><br>"+communityResource.address, {'maxWidth':'500', 'className' : 'custom'});
+          this.communityResourceMarkers.push(marker);
+    }))
+    .catch(e => console.log(e));
+  }
+
   getSurroundingCommunity() {
     this.communityProvider.get_community_surrounding(this.lat + "," + this.lng)
       .then((community: Community) =>{

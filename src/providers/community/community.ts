@@ -32,7 +32,7 @@ export class CommunityProvider {
         })
         .toPromise()
         .then(response => {
-            if(response.json() == null) {
+            if(response.text() == "") {
                 return null;
             }
             return new Community(
