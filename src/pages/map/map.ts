@@ -26,7 +26,9 @@ export class MapPage {
   public communities:Array<string> = [];
   public index:number = 0;
 
-  public radius: number = 3;
+  public radius: number = 300;
+  public metricUnit: string = "m";
+
   lat: any;
   lng: any;
   marker: any;
@@ -84,9 +86,15 @@ export class MapPage {
   }
 
   editRadius() {
-    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": this.radius }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
+    this.radius = this.radius == 1 ? 10 : this.radius/100;
+    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": this.radius, "metricUnit": this.metricUnit }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
     editRadiusModal.onDidDismiss(data => {
-      this.radius = data.radius;
+      this.metricUnit = data.metricUnit;
+      if(this.metricUnit == "km"){
+        this.radius = 1;
+      }else{
+        this.radius = data.radius*100;
+      }
     });
     editRadiusModal.present();
   }
