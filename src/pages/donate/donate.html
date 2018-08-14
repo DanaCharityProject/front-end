@@ -7,12 +7,18 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>donate</ion-title>
+    <ion-title>Donate</ion-title>
+    <button ion-button clear icon-only float-right (click)="dismissDontSave()">
+      <ion-icon name="close"></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+	<ion-list>
+		 <ion-item *ngFor="let names of resourceNames">{{names}}</ion-item>
+	</ion-list>
+	<button ion-button class="solid-button" color="secondary" (click)="dismissDontSave()">Donate</button>
 </ion-content>

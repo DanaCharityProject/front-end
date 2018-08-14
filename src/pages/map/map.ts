@@ -87,8 +87,8 @@ export class MapPage {
   }
 
   editRadius() {
-    this.radius = this.radius == 1 ? 10 : this.radius/100;
-    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": this.radius, "metricUnit": this.metricUnit }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
+    let radius_int = this.getRadiusInt();
+    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": radius_int, "metricUnit": this.metricUnit }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
     editRadiusModal.onDidDismiss(data => {
       this.metricUnit = data.metricUnit;
       if(this.metricUnit == "km"){
@@ -98,6 +98,10 @@ export class MapPage {
       }
     });
     editRadiusModal.present();
+  }
+
+  getRadiusInt(){
+    return this.radius == 1 ? 10 : this.radius/100;
   }
 
   loadMap() {
@@ -121,9 +125,10 @@ export class MapPage {
       popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
     });
 
-    this.communityResourceProvider.get_nearby_communityresource(43.65357, -79.38394, 1)
+    this.communityResourceProvider.get_nearby_communityresource(this.lat, this.lng, this.getRadiusInt())
       .then((communityResources: CommunityResource[]) =>
         communityResources.forEach(communityResource => {
+          console.log(communityResource);
           let marker = leaflet.marker(communityResource.location, {icon: charIcon}).addTo(this.map);
           marker.bindPopup("<b>"+communityResource.name+"</b><br>"+communityResource.address, {'maxWidth':'500', 'className' : 'custom'}).openPopup();
         }))
@@ -140,7 +145,17 @@ export class MapPage {
   }  
 
   donate(){
-    let donateModal = this.modalCtrl.create(DonatePage, {  }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
+    let resources = [];
+    let resourceNames = ['a','b','c'];
+    
+    // this.communityResourceProvider.get_nearby_communityresource(this.lat, this.lng, this.getRadiusInt())
+    //   .then((communityResources: CommunityResource[]) =>
+    //     communityResources.forEach(communityResource => {
+    //       resources.push(communityResource);
+    //       resourceNames.push(communityResource.name);
+    // }));
+    let donateModal = this.modalCtrl.create(DonatePage, { "resources": resources, 
+      "names": resourceNames }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
     donateModal.onDidDismiss(data => {
       // this.metricUnit = data.metricUnit;
       // if(this.metricUnit == "km"){
