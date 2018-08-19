@@ -7,4 +7,11 @@ page-donate {
     	background-color: #ff0a70;
     	border-radius: 5px;
     }
+
+    #donate-div { /* Donate Button Container */
+        width: 100%;
+        position: absolute;
+        bottom: 5%; 
+        text-align: center;
+    }
 }

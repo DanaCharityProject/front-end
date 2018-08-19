@@ -146,14 +146,15 @@ export class MapPage {
 
   donate(){
     let resources = [];
-    let resourceNames = ['a','b','c'];
+    //let resourceNames = ['a','b','c'];
+    let resourceNames = [];
     
-    // this.communityResourceProvider.get_nearby_communityresource(this.lat, this.lng, this.getRadiusInt())
-    //   .then((communityResources: CommunityResource[]) =>
-    //     communityResources.forEach(communityResource => {
-    //       resources.push(communityResource);
-    //       resourceNames.push(communityResource.name);
-    // }));
+    this.communityResourceProvider.get_nearby_communityresource(this.lat, this.lng, this.getRadiusInt())
+      .then((communityResources: CommunityResource[]) =>
+        communityResources.forEach(communityResource => {
+          resources.push(communityResource);
+          resourceNames.push(communityResource.name);
+    }));
     let donateModal = this.modalCtrl.create(DonatePage, { "resources": resources, 
       "names": resourceNames }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
     donateModal.onDidDismiss(data => {

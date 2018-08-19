@@ -16,6 +16,7 @@ import { List } from 'ionic-angular';
 export class DonatePage {
 	private resources: any;
 	private resourceNames: any;
+	private amount: 5;
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
   	this.resources = navParams.get("resources");
@@ -29,6 +30,10 @@ export class DonatePage {
 
   dismissDontSave() {
     this.viewCtrl.dismiss();
+  }
+
+  donate() {
+  	console.log(this.amount);
   }
 
 }
