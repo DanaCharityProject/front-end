@@ -3,25 +3,46 @@ import {async, fakeAsync, tick} from '@angular/core/testing';
 import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
 import {Response, ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-
+import { Storage as IonicStorage} from '@Ionic/storage';
 import {UserProvider, User} from './user'
 import { EnvironmentVariables } from '../../app/env/env';
+import { resolveDep } from '../../../node_modules/@angular/core/src/view/provider';
+
+// Mock class for Ionic's Storage
+class MockStorage {
+  setItem(key, value) {}
+
+  getItem(key) {
+    return "test";
+  }
+}
 
 describe('MockBackend UserProvider', () => {
 
-  // construct UserProvider with MockBackend for testing.
+  // construct UserProvider with MockBackend, Env Variables and MockStorage for testing.
   beforeEach(() => {
     this.injector = ReflectiveInjector.resolveAndCreate([
       {provide: ConnectionBackend, useClass: MockBackend},
       {provide: RequestOptions, useClass: BaseRequestOptions},
       {provide: EnvironmentVariables, useValue: {apiEndpoint: "api"}},
       Http,
-      UserProvider
+      {provide: IonicStorage, useClass: MockStorage }
     ]);
 
-    this.userProvider = this.injector.get(UserProvider);
+    // Set mocks
+    this.http = this.injector.get(Http);
+    this.env = this.injector.get(EnvironmentVariables);
+    this.storage = this.injector.get(IonicStorage);
     this.backend = this.injector.get(ConnectionBackend) as MockBackend;
     this.backend.connections.subscribe((connection: any) => this.lastConnection = connection);
+
+    // Class that we want to test
+    this.userProvider = new UserProvider(this.http, this.env, this.storage);
+  });
+
+  it('test frame', () => {
+    let res = this.userProvider.test();
+    expect(res).toBe("test");
   });
 
   // ensure login calls the correct endpoint.

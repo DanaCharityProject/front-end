@@ -18,7 +18,13 @@ export class User {
 */
 @Injectable()
 export class UserProvider {
-  constructor(public http: Http, @Inject(EnvironmentVariables) public env, @Inject(IonicStorage) private storage: Storage) {}
+  constructor(public http: Http, @Inject(EnvironmentVariables) public env, @Inject(IonicStorage) public storage: Storage) {}
+
+  // REMOVE ME
+  test() {
+    this.storage.setItem("key", "val");
+    return this.storage.getItem("key");
+  }
 
   login(username: string, password: string): Promise<User> {
     let headers = new Headers();
