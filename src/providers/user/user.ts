@@ -4,6 +4,7 @@ import { Base64 } from 'js-base64';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { EnvironmentVariables } from '../../app/env/env';
+import { Storage as IonicStorage } from '@ionic/storage';
 
 export class User {
   constructor(public username: string, public token: string) {}
@@ -17,7 +18,13 @@ export class User {
 */
 @Injectable()
 export class UserProvider {
-  constructor(public http: Http, @Inject(EnvironmentVariables) public env) {}
+  constructor(public http: Http, @Inject(EnvironmentVariables) public env, @Inject(IonicStorage) public storage: Storage) {}
+
+  // REMOVE ME
+  test() {
+    this.storage.setItem("key", "val");
+    return this.storage.getItem("key");
+  }
 
   login(username: string, password: string): Promise<User> {
     let headers = new Headers();

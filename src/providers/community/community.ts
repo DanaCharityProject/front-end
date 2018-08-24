@@ -27,6 +27,24 @@ export class CommunityProvider {
         .catch(e => this.handleError(e));
     }
 
+    get_community_surrounding(coordinates: string): Promise<Community> {
+        return this.http.get(this.env.apiEndpoint + "/community/" + coordinates, {
+        })
+        .toPromise()
+        .then(response => {
+            if(response.text() == "") {
+                return null;
+            }
+            return new Community(
+                response.json().id,
+                response.json().name,
+                response.json().boundaries)
+            })
+        .catch(e => {
+            console.log('An error occurred while getting the surrounding community', e)
+            return null});
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
