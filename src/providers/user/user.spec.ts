@@ -3,17 +3,21 @@ import {async, fakeAsync, tick} from '@angular/core/testing';
 import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
 import {Response, ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import { Storage as IonicStorage} from '@Ionic/storage';
+import {Storage as IonicStorage} from '@Ionic/storage';
 import {UserProvider, User} from './user'
-import { EnvironmentVariables } from '../../app/env/env';
-import { resolveDep } from '../../../node_modules/@angular/core/src/view/provider';
+import {EnvironmentVariables} from '../../app/env/env';
+import {resolveDep} from '../../../node_modules/@angular/core/src/view/provider';
 
 // Mock class for Ionic's Storage
 class MockStorage {
-  setItem(key, value) {}
+  item = null;
+
+  setItem(key, value) {
+    this.item = [key, value];
+  }
 
   getItem(key) {
-    return "test";
+    return this.item[0] == key ? this.item : null;
   }
 }
 
@@ -40,11 +44,6 @@ describe('MockBackend UserProvider', () => {
     this.userProvider = new UserProvider(this.http, this.env, this.storage);
   });
 
-  it('test frame', () => {
-    let res = this.userProvider.test();
-    expect(res).toBe("test");
-  });
-
   // ensure login calls the correct endpoint.
   it('login() shoud query current service url', () => {
     this.userProvider.login("test", "password");
@@ -54,7 +53,7 @@ describe('MockBackend UserProvider', () => {
   });
 
   // ensure login constructs User model from token in response.
-  it('login() should return a user model', fakeAsync(() => {
+  it('login() should return a user model and store a token', fakeAsync(() => {
     let result: User;
 
     // Sets callback on Promise to assign returned user to result.
@@ -73,6 +72,7 @@ describe('MockBackend UserProvider', () => {
     // check assertions on result object.
     expect(result.username).toEqual("test", ' username should be test');
     expect(result.token).toEqual("token", ' token should be token');
+    expect(this.storage.getItem("token")).toEqual(["token", "token"]);
   }));
 
   // ensure login fails on 4XX status code.

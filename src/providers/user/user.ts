@@ -6,6 +6,8 @@ import 'rxjs/add/operator/toPromise';
 import { EnvironmentVariables } from '../../app/env/env';
 import { Storage as IonicStorage } from '@ionic/storage';
 
+const TOKEN = 'token';
+
 export class User {
   constructor(public username: string, public token: string) {}
 }
@@ -20,12 +22,6 @@ export class User {
 export class UserProvider {
   constructor(public http: Http, @Inject(EnvironmentVariables) public env, @Inject(IonicStorage) public storage: Storage) {}
 
-  // REMOVE ME
-  test() {
-    this.storage.setItem("key", "val");
-    return this.storage.getItem("key");
-  }
-
   login(username: string, password: string): Promise<User> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -34,7 +30,10 @@ export class UserProvider {
     console.log(headers);
     return this.http.get(this.env.apiEndpoint + '/user/token', {headers:headers})
       .toPromise()
-      .then(response => new User(username, response.json().token))
+      .then(response => {
+        this.storage.setItem(TOKEN, response.json().token)
+        return new User(username, response.json().token)
+      })
       .catch(e => this.handleError(e));
   }
 
