@@ -30,7 +30,7 @@ export class MapPage {
 
   private charIcon = leaflet.icon({
     iconUrl: '../assets/images/icon.png',
-    iconSize:     [50, 50], 
+    iconSize:     [50, 50],
     /*iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
     popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
   });
@@ -41,9 +41,10 @@ export class MapPage {
   lat: any;
   lng: any;
   marker: any;
+  centered: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-              public modalCtrl: ModalController, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public modalCtrl: ModalController,
               public communityProvider: CommunityProvider,
               public communityResourceProvider: CommunityResourceProvider,
               private geolocation: Geolocation) {}
@@ -56,7 +57,7 @@ export class MapPage {
   ionViewDidLoad(){
     let geoMarker = leaflet.icon({
       iconUrl: '../assets/images/currPos.png',
-      iconSize:     [50, 50], 
+      iconSize:     [20, 20],
       //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
       popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
     });
@@ -64,7 +65,7 @@ export class MapPage {
          this.lat = pos.coords.latitude;
          this.lng = pos.coords.longitude;
          this.loadMap();
-         this.marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);   
+         this.marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);
          this.centerLeafletMapOnMarker(this.map, this.marker);
          this.getSurroundingCommunity();
         }).catch((error) => {
@@ -96,7 +97,7 @@ export class MapPage {
   }
 
   editRadius() {
-    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": this.radius }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "myModal" });
+    let editRadiusModal = this.modalCtrl.create(EditRadiusPage, { "radius": this.radius }, { showBackdrop: true, enableBackdropDismiss: false, cssClass: "select-modal" });
     editRadiusModal.onDidDismiss(data => {
       this.radius = data.radius;
     });
@@ -109,6 +110,14 @@ export class MapPage {
     }).setView([this.lat, this.lng], 14)
     .setZoom(14);
 
+    this.map.on('moveend', function(event) {
+      if (this.map.getCenter().distanceTo(leaflet.latLng(this.lat, this.lng)) > 20) {
+        this.centered = false;
+      } else {
+        this.centered = true;
+      }
+    }.bind(this))
+
     leaflet.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
       attributions: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 20,
@@ -117,10 +126,10 @@ export class MapPage {
     }).addTo(this.map);
 
     //leaflet.control.locate().addTo(this.map);
-    
+
     let charIcon = leaflet.icon({
       iconUrl: '../assets/images/icon.png',
-      iconSize:     [50, 50], 
+      iconSize:     [20, 20],
       /*iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
       popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
     });
@@ -131,7 +140,7 @@ export class MapPage {
       .then((communities: Community[]) =>
         communities.forEach(community => {
           this.communities.push(community.name);
-          let multipolygon = leaflet.polygon(community.boundaries['coordinates'], {color: 'pink'}).addTo(this.map);
+          let multipolygon = leaflet.polygon(community.boundaries['coordinates'], {color: '#1ba39d', opacity: .2, fillOpacity: 0.05, weight: 5}).addTo(this.map);
           multipolygon.bindPopup("<b>"+community.name+"</b>", {'maxWidth':'500', 'className' : 'custom'});
         }))
       .catch(e => console.log(e));
@@ -143,7 +152,7 @@ export class MapPage {
     });
     let bounds = this.map.getBounds();
 
-    let boundArrayString = "POLYGON((" + 
+    let boundArrayString = "POLYGON((" +
       bounds.getNorthWest().lat + " " + bounds.getNorthWest().lng + "," +
       bounds.getNorthEast().lat + " " + bounds.getNorthEast().lng + "," +
       bounds.getSouthEast().lat + " " + bounds.getSouthEast().lng + "," +
