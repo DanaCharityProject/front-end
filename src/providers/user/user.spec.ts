@@ -3,7 +3,7 @@ import {async, fakeAsync, tick} from '@angular/core/testing';
 import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
 import {Response, ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import {Storage as IonicStorage} from '@Ionic/storage';
+import {Storage as IonicStorage} from '@ionic/storage';
 import {UserProvider, User} from './user'
 import {EnvironmentVariables} from '../../app/env/env';
 import {resolveDep} from '../../../node_modules/@angular/core/src/view/provider';
@@ -114,7 +114,7 @@ describe('MockBackend UserProvider', () => {
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
       body: true
     })));
-    
+
     tick();
     //expect(result).toEqual(true); <- don't think this is right?
     expect(result).toEqual(true);
