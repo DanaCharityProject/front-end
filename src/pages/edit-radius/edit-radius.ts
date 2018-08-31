@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
 
-
+const maxRadius = 10;
 /**
  * Generated class for the EditRadiusPage page.
  *
@@ -14,9 +14,12 @@ import { NavParams, ViewController } from "ionic-angular";
 })
 export class EditRadiusPage {
   private radius: number;
+  private metricUnit: string;
+
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
     this.radius = navParams.get("radius");
+    this.metricUnit = navParams.get("metricUnit");
   }
 
   ionViewDidLoad() {
@@ -28,8 +31,12 @@ export class EditRadiusPage {
   }
 
   dismissSave() {
-    this.viewCtrl.dismiss({ "radius": this.radius });
-  }
-
-
+    if(this.radius == maxRadius){
+      this.metricUnit = "km";
+      this.viewCtrl.dismiss({ "radius": 1, "metricUnit": this.metricUnit });
+    }else{
+      this.metricUnit = "m";
+      this.viewCtrl.dismiss({ "radius": this.radius, "metricUnit": this.metricUnit });
+    }
+ }
 }

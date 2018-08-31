@@ -19,6 +19,7 @@ import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { EnvironmentsModule } from './env/env.module';
 import { EditRadiusPage } from '../pages/edit-radius/edit-radius';
+import { DonatePage } from '../pages/donate/donate';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EditRadiusPage } from '../pages/edit-radius/edit-radius';
     RegistrationPage,
     LoginPage,
     MapPage,
-    EditRadiusPage
+    EditRadiusPage,
+    DonatePage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { EditRadiusPage } from '../pages/edit-radius/edit-radius';
     RegistrationPage,
     LoginPage,
     MapPage,
-    EditRadiusPage
+    EditRadiusPage,
+    DonatePage
   ],
   providers: [
     StatusBar,
