@@ -31,7 +31,7 @@ export class MapPage {
 
   private charIcon = leaflet.icon({
     iconUrl: '../assets/images/icon.png',
-    iconSize:     [50, 50],
+    iconSize:     [20, 20],
     /*iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
     popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
   });
