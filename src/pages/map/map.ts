@@ -88,6 +88,40 @@ export class MapPage {
     this.getCommunitiesOnScreen();
   }
 
+
+  ionViewDidLoad(){
+    let geoMarker = leaflet.icon({
+      iconUrl: '../assets/images/currPos.png',
+      iconSize:     [50, 50],
+      //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location*/
+      popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
+    });
+    this.geolocation.getCurrentPosition().then((pos) => {
+         this.lat = pos.coords.latitude;
+         this.lng = pos.coords.longitude;
+         this.marker = leaflet.marker([this.lat, this.lng], {icon: geoMarker}).addTo(this.map);
+         this.centerLeafletMapOnMarker(this.map, this.marker);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+  }
+
+
+  recenterMap() {
+    this.geolocation.getCurrentPosition().then((pos) => {
+      this.marker.setLatLng({lon: this.lng, lat: this.lat });
+      this.centerLeafletMapOnMarker(this.map, this.marker);
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }
+
+  private centerLeafletMapOnMarker(map, marker) {
+    var latLngs = [ marker.getLatLng() ];
+    var markerBounds = leaflet.latLngBounds(latLngs);
+    map.fitBounds(markerBounds);
+  }
+
   previous() {
     this.index -= ((this.index - 1) >= 0) ? 1 : 0;
   }
@@ -126,7 +160,6 @@ export class MapPage {
     }).addTo(this.map);
 
     //leaflet.control.locate().addTo(this.map);
-
     let charIcon = leaflet.icon({
       iconUrl: '../assets/images/icon.png',
       iconSize:     [20, 20],
