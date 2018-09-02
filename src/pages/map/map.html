@@ -7,42 +7,66 @@
 <ion-header no-border>
   <ion-navbar transparent>
     <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+      <ion-icon color="primary" id="hamburger-menu" name="menu"></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen>
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
-    <!--[if lt IE 9]>
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet'
+  />
+  <!--[if lt IE 9]>
       <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.ie.css' rel='stylesheet' />
     <![endif]-->
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet'
+  />
   <div id="map"></div>
-    <ion-fab bottom right>
-      <button ion-fab (click)="recenterMap()" color="primary"><ion-icon name="ios-locate-outline"></ion-icon></button>
-    </ion-fab>
-    <div id="container">
-      <div id="back-arrow" float-left>
-        <button ion-button clear round icon-only color="dark" (click)="previous()">
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </div>
-      <div id="map-box">
-        <h3>{{ current_community }}</h3>
-        <button ion-button clear outline (click)="editRadius()">
-          <h4 text-center><ion-icon name="pin"></ion-icon> {{ radius }} km</h4>
-        </button>
-      </div>
-      <div id="front-arrow" float-right>
-        <button ion-button clear round icon-only color="dark" (click)="next()">
-          <ion-icon name="arrow-forward"></ion-icon>
-        </button>
-      </div>
+  <ion-fab *ngIf="!centered" id="recenter-button" bottom right>
+    <button ion-fab (click)="recenterMap()" color="secondary"><ion-icon name="md-locate"></ion-icon></button>
+  </ion-fab>
+  <div id="container">
+
+    <div text-center id="map-box">
+      <ion-row>
+        <ion-col>
+          <button ion-button clear round icon-only color="dark" (click)="previous()">
+            <ion-icon color="primary" name="ios-arrow-back"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <h4 ion-text color="primary">{{ communities[index] }}</h4>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear round icon-only color="dark" (click)="next()">
+            <ion-icon color="primary" name="ios-arrow-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button ion-button clear outline (click)="editRadius()">
+            <h5 ion-text text-lowercase color="secondary">
+              <ion-icon margin-right name="cash"></ion-icon>
+              ${{ radius }}
+            </h5>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear outline (click)="editRadius()">
+            <h5 ion-text text-lowercase color="secondary">
+              <ion-icon margin-right name="pin"></ion-icon>
+              {{ radius }} {{ metricUnit }}
+            </h5>
+          </button>
+        </ion-col>
+      </ion-row>
     </div>
-  
+  </div>
+
   <div id="map-button">
-    <button ion-button large color="dark">Donate</button>
+    <button ion-button rounded large color="primary" (click)="donate()">
+      Donate
+    </button>
   </div>
 </ion-content>

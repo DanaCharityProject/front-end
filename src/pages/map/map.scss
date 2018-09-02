@@ -19,9 +19,9 @@ page-map {
     }
 
     #container {
-        background: rgba(255, 255, 255, 0.50);
-        margin: 25px 25px;
-        padding: 10px;
+        background: rgba(255, 255, 255, 1.00);
+        margin: 0px 18px;
+        padding: 0;
         overflow: auto;
         display: flex;
         align-items: center;
@@ -34,21 +34,32 @@ page-map {
     #map-button { /* Donate Button Container */
         width: 100%;
         position: absolute;
-        bottom: 5%; 
+        bottom: 5%;
         text-align: center;
     }
 
     #map-button button { /* Donate Button */
         margin-left: auto;
         margin-right: auto;
+        bottom:2em;
+        padding: 2em 4em;
         left: 0;
         right: 0;
+    }
+
+    #recenter-button button {
+      bottom: 0em;
+      right: 0em;
+    }
+
+    #hamburger-menu {
+      font-size: 45px; //Preferred size here
     }
 
     /* style for leaflet popup  */
     .custom .leaflet-popup-tip,
     .custom .leaflet-popup-content-wrapper {
-        background: black;
+        background: map-get($colors, primary);
         color: #ffffff;
     }
 }
