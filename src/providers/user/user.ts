@@ -30,29 +30,31 @@ export class UserProvider {
     console.log(headers);
     return this.http.get(this.env.apiEndpoint + '/user/token', {headers:headers})
       .toPromise()
-      .then(response => {
-        this.storage.setItem(TOKEN, response.json().token)
-        return new User(username, response.json().token)
+      .then(res => {
+        if (res.status == 201){
+          this.storage.set(TOKEN, res.json().token)
+          return new User(username, res.json().token)
+        } else {
+          return this.handleError({message: 'login failed with code ' + res.status});
+        }
       })
       .catch(e => this.handleError(e));
   }
 
   register(username: string, password: string, email: string): Promise<Boolean> {
-     console.log(email+" "+password);
-     return new Promise((resolve, reject) => {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Access-Control-Allow-Origin' , '*');
-        headers.append('Accept', 'application/json');
+    console.log(email+" "+password);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin' , '*');
+    headers.append('Accept', 'application/json');
 
-        this.http.post(this.env.apiEndpoint + '/user', JSON.stringify({'email': email, 'password': password}), 
-          {headers: headers})
-                .subscribe(res => {
-                    resolve(res.json());
-                }, (err) => {
-                  reject(err);
-                });
-     });
+    return this.http.post(this.env.apiEndpoint + '/user', JSON.stringify({'email': email, 'password': password}), 
+      {headers: headers})
+      .toPromise()
+      .then(res => {
+        return res.status == 201 ? true : this.handleError({message: 'registration failed with code ' + res.status});
+      }).catch(err => this.handleError(err));
+     
   }
 
   private handleError(error: any): Promise<any> {

@@ -12,11 +12,11 @@ import {resolveDep} from '../../../node_modules/@angular/core/src/view/provider'
 class MockStorage {
   item = null;
 
-  setItem(key, value) {
+  set(key, value) {
     this.item = [key, value];
   }
 
-  getItem(key) {
+  get(key) {
     return this.item[0] == key ? this.item : null;
   }
 }
@@ -45,7 +45,7 @@ describe('MockBackend UserProvider', () => {
   });
 
   // ensure login calls the correct endpoint.
-  it('login() shoud query current service url', () => {
+  it('login() should query current service url', () => {
     this.userProvider.login("test", "password");
 
     expect(this.lastConnection).toBeDefined('no http service connection at all?');
@@ -61,6 +61,7 @@ describe('MockBackend UserProvider', () => {
 
     // mockRespond prepares a fake response to be sent to the userProvider.
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
+      status: 201,
       body: JSON.stringify({
           token: "token"
         }),
@@ -72,7 +73,7 @@ describe('MockBackend UserProvider', () => {
     // check assertions on result object.
     expect(result.username).toEqual("test", ' username should be test');
     expect(result.token).toEqual("token", ' token should be token');
-    expect(this.storage.getItem("token")).toEqual(["token", "token"]);
+    expect(this.storage.get("token")).toEqual(["token", "token"]);
   }));
 
   // ensure login fails on 4XX status code.
@@ -81,8 +82,8 @@ describe('MockBackend UserProvider', () => {
     let caughtError: any;
 
     this.userProvider.login("test", "wrong-password")
-        .then((user: User) => result = user)
-        .catch((error: any) => caughtError = error);
+      .then((user: User) => result = user)
+      .catch((error: any) => caughtError = error);
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
       status: 401,
@@ -97,7 +98,7 @@ describe('MockBackend UserProvider', () => {
 
 
   // ensure register calls the correct endpoint.
-  it('register() shoud query current service url', () => {
+  it('register() should query current service url', () => {
     this.userProvider.register("test_username", "test_password");
 
     expect(this.lastConnection).toBeDefined('no http service connection at all?');
@@ -109,14 +110,15 @@ describe('MockBackend UserProvider', () => {
   it('register() should return true', fakeAsync(() => {
     let result: Boolean;
 
-    this.userProvider.register("name", "password", "email").then((response: Boolean) => result = response);
+    this.userProvider.register("name", "password", "email")
+      .then((response: Boolean) => result = response);
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
-      body: true
+      status: 201
     })));
     
     tick();
-    //expect(result).toEqual(true); <- don't think this is right?
+
     expect(result).toEqual(true);
   }));
 
@@ -125,17 +127,18 @@ describe('MockBackend UserProvider', () => {
     let caughtError: any;
 
     this.userProvider.register("name", "password", "email")
-        .then((response: Boolean) => result = response)
-        .catch((error: any) => caughtError = error);
+      .then((response: Boolean) => {
+        console.log('response: ' + response)
+        result = response})
+      .catch((error: any) => caughtError = error);
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({
       status: 409,
-      statusText: 'Conflict'
+      statusText: 'Conflict',
     })));
 
     tick();
 
-    // Someone fix this
     expect(result).toBeUndefined();
     expect(caughtError).toBeDefined();
   }));
