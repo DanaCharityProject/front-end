@@ -148,7 +148,7 @@ export class MapPage {
     let resources = [];
     //let resourceNames = ['a','b','c'];
     let resourceNames = [];
-    
+    console.log(this.getRadiusInt())
     this.communityResourceProvider.get_nearby_communityresource(this.lat, this.lng, this.getRadiusInt())
       .then((communityResources: CommunityResource[]) =>
         communityResources.forEach(communityResource => {
