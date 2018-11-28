@@ -12,7 +12,7 @@
           offset-xs1
           mt-5
         >
-          <v-card class="search-bar">
+          <v-card>
             <v-card-title primary-title>
               <div>
                 <h3 class="headline mb-0">Welcome to Dana!</h3>
@@ -40,7 +40,7 @@ import Map from '@/components/Map.vue';
 
 @Component({
   components: {
-    Map
+    Map,
   },
 })
 export default class Dashboard extends Vue {
@@ -52,13 +52,6 @@ export default class Dashboard extends Vue {
 .dashboard {
   padding: 0;
   height: 100%;
-}
-
-.search-bar {
-  /* position: absolute;
-    top: 50px;
-    width: 100%;
-    margin: 0 50px; */
 }
 </style>
 
